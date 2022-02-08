@@ -18,8 +18,8 @@ public final class ResourceManager {
 
 		//mapas
 		assets.setLoader(TiledMap.class, new TmxMapLoader());
-		assets.load("maps/mapa0.tmx", TiledMap.class);
-		assets.load("maps/mapa2.tmx", TiledMap.class);
+		assets.load("maps/mapa1.tmx", TiledMap.class);
+		//assets.load("maps/mapa2.tmx", TiledMap.class);
         //elementos de mapa
         //assets.load("maps/Images/arbol.png", Texture.class);
         assets.load("maps/images/barrel.png", Texture.class);
@@ -29,10 +29,11 @@ public final class ResourceManager {
         //jugador
         assets.load("player/espaldaWalk.png",Texture.class);
         assets.load("player/grande.png",Texture.class);
-        assets.load("player/frenteWalk.png",Texture.class);
-        assets.load("player/frenteGrande.png",Texture.class);
+        assets.load("player/depie.png",Texture.class);
+        assets.load("player/agachado.png",Texture.class);
         assets.load("player/izquieredawalk.png",Texture.class);
-        assets.load("player/derechawalk.png",Texture.class);
+        assets.load("player/derechaQuieto.png",Texture.class);
+        assets.load("player/derechaAnda.png",Texture.class);
         assets.load("player/Bola.png",Texture.class);
         
         //objetos
