@@ -17,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 
-import elements.Barril;
 import elements.Blob;
 import elements.Element;
 import elements.Enemigo;
@@ -32,7 +31,6 @@ public class GameScreen extends BScreen {
 
 	Stage mainStage;
 	Stage uiStage;
-	Array<Barril> barriles;
 	public Array<Solid> suelo;
 	public Array<Enemigo> enemigos;
 	Solid end;
@@ -40,7 +38,7 @@ public class GameScreen extends BScreen {
 	OrthographicCamera camara;
 	private TiledMap map;
 	private int tileWidth, tileHeight, mapWidthInTiles, mapHeightInTiles, mapWidthInPixels, mapHeightInPixels;
-	private BarraVida barra;
+	//private BarraVida barra;
 
 	private OrthogonalTiledMapRenderer renderer;
 
@@ -123,13 +121,9 @@ public class GameScreen extends BScreen {
 		}
 
 		player = new Player(inicioX, inicioY, mainStage);
-		barriles = new Array<Barril>();
-		for (int i = 0; i < 10; i++) {
-			barriles.add(new Barril(i * 14, 30, mainStage));
-		}
 
 		uiStage = new Stage();
-		barra = new BarraVida(Parametros.getAnchoPantalla() / 50, Parametros.getAltoPantalla() * 9 / 10, this.uiStage);
+		//barra = new BarraVida(Parametros.getAnchoPantalla() / 50, Parametros.getAltoPantalla() * 9 / 10, this.uiStage);
 		etiquetaVida = new Label("Vida: " + Parametros.vida, uiStyle);
 		etiquetaVida.setPosition(Parametros.getAnchoPantalla()/20, Parametros.getAltoPantalla()/20);
 		uiStage.addActor(etiquetaVida);
@@ -141,7 +135,6 @@ public class GameScreen extends BScreen {
 
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
 		super.render(delta);
 		mainStage.act();
 		uiStage.act();
@@ -162,21 +155,7 @@ public class GameScreen extends BScreen {
 
 	public void colide() {
 		player.tocoSuelo = false;
-		for (Barril b : barriles) {
-
-			if (b.getEnabled() && b.overlaps(player)) {
-				player.preventOverlap(b);
-
-				// b.preventOverlap(player);
-
-			}
-
-			if (player.pies.overlaps(b)) {
-				player.tocoSuelo = true;
-
-			}
-
-		}
+		
 
 		for (Solid b : suelo) {
 

@@ -6,8 +6,8 @@ public class Parametros {
  //private static int anchoPantalla=1200;
  //private static int altoPantalla=900;
  
- private static int anchoPantalla=1920;
- private static int altoPantalla=1080;
+ private static int anchoPantalla=1200;
+ private static int altoPantalla=900;
  
  public static boolean debug=true;
  
@@ -23,7 +23,7 @@ public class Parametros {
  
  public static int nivel=0;
  
- public static int gravedad=-130;
+ public static int gravedad=-1400;
  public static float jugadorx=0;
  public static float jugadory=0;
  public static int vida=50;

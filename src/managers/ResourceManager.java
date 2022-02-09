@@ -31,7 +31,8 @@ public final class ResourceManager {
         assets.load("player/grande.png",Texture.class);
         assets.load("player/depie.png",Texture.class);
         assets.load("player/agachado.png",Texture.class);
-        assets.load("player/izquieredawalk.png",Texture.class);
+        assets.load("player/izquierdaQuieto.png",Texture.class);
+        assets.load("player/izquierdaAnda.png",Texture.class);
         assets.load("player/derechaQuieto.png",Texture.class);
         assets.load("player/derechaAnda.png",Texture.class);
         assets.load("player/Bola.png",Texture.class);
