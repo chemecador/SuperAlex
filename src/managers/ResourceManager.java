@@ -27,14 +27,11 @@ public final class ResourceManager {
         assets.load("enemies/blob.png",Texture.class);
         assets.load("enemies/blob_jump.png",Texture.class);
         //jugador
-        assets.load("player/espaldaWalk.png",Texture.class);
-        assets.load("player/grande.png",Texture.class);
+        assets.load("player/frente.png",Texture.class);
         assets.load("player/depie.png",Texture.class);
         assets.load("player/agachado.png",Texture.class);
-        assets.load("player/izquierdaQuieto.png",Texture.class);
-        assets.load("player/izquierdaAnda.png",Texture.class);
-        assets.load("player/derechaQuieto.png",Texture.class);
-        assets.load("player/derechaAnda.png",Texture.class);
+        assets.load("player/izquierda.png",Texture.class);
+        assets.load("player/derecha.png",Texture.class);
         assets.load("player/Bola.png",Texture.class);
         
         //objetos

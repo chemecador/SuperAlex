@@ -35,14 +35,14 @@ public class Player extends Element {
 		this.maxSpeed = 80000;
 		this.deceleration = this.maxSpeed/1000;
 		tocoSuelo = false;
-		frente = loadFullAnimation("player/depie.png", 1, 1, 0.2f, true);
+		frente = loadFullAnimation("player/frente.png", 2, 1, 0.2f, true);
 		espalda = loadFullAnimation("player/agachado.png", 1, 1, 0.2f, true);
-		drcha = this.loadFullAnimation("player/derechaAnda.png", 1, 1, 0.2f, true);
-		izqda = this.loadFullAnimation("player/izquierdaAnda.png", 1, 1, 0.2f, true);
+		drcha = this.loadFullAnimation("player/derecha.png", 2, 1, 0.3f, true);
+		izqda = this.loadFullAnimation("player/izquierda.png", 2, 1, 0.3f, true);
 		quieto = this.loadFullAnimation("player/depie.png", 1, 1, 0.2f, true);
-		this.setPolygon(8);
+		this.setPolygon(6);
 
-		pies = new Element(0, 0, s, this.getWidth(), this.getHeight() / 10);
+		pies = new Element(0, 0, s, this.getWidth()/2, this.getHeight() / 10);
 		pies.setRectangle();
 
 		balas = new Array<Bala>();
