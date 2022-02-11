@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.0" orientation="orthogonal" renderorder="right-down" width="15" height="35" tilewidth="100" tileheight="100" infinite="0" nextlayerid="6" nextobjectid="23">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="15" height="35" tilewidth="100" tileheight="100" infinite="0" nextlayerid="6" nextobjectid="25">
  <layer id="1" name="Capa de patrones 1" width="15" height="35">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -129,6 +129,16 @@
    </properties>
   </object>
   <object id="22" x="1324.52" y="1805.43" width="171.169" height="110.037">
+   <properties>
+    <property name="name" value="Solid"/>
+   </properties>
+  </object>
+  <object id="23" x="-8" y="0" width="16" height="2948">
+   <properties>
+    <property name="name" value="Solid"/>
+   </properties>
+  </object>
+  <object id="24" x="1468" y="4" width="40" height="3004">
    <properties>
     <property name="name" value="Solid"/>
    </properties>

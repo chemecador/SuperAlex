@@ -234,9 +234,9 @@ public class Element extends Actor {
 		speed = MathUtils.clamp(speed, 0, maxSpeed);
 
 		// update velocity
-		if (velocity.len() == 0)
+		/*if (velocity.len() == 0)
 			velocity.set(speed, 0);
-		else
+		else*/
 			velocity.setLength(speed);
 
 		// update position according to value stored in velocity vector

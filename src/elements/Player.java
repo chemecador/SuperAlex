@@ -4,8 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Intersector.MinimumTranslationVector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
@@ -28,12 +31,13 @@ public class Player extends Element {
 	public Element pies;
 	public boolean tocoSuelo;
 
-	private float walkingSpeed = 10;
+	private float walkingSpeed = 600;
+	private float fuerzaSalto = 40000;
 
 	public Player(float x, float y, Stage s) {
 		super(x, y, s);
-		this.maxSpeed = 80000;
-		this.deceleration = this.maxSpeed/1000;
+		this.maxSpeed = 10000;
+		this.deceleration = 2000000;
 		tocoSuelo = false;
 		frente = loadFullAnimation("player/frente.png", 2, 1, 0.2f, true);
 		espalda = loadFullAnimation("player/agachado.png", 1, 1, 0.2f, true);
@@ -42,7 +46,7 @@ public class Player extends Element {
 		quieto = this.loadFullAnimation("player/depie.png", 1, 1, 0.2f, true);
 		this.setPolygon(6);
 
-		pies = new Element(0, 0, s, this.getWidth()/2, this.getHeight() / 10);
+		pies = new Element(0, 0, s, this.getWidth()/4, this.getHeight() / 10);
 		pies.setRectangle();
 
 		balas = new Array<Bala>();
@@ -61,7 +65,7 @@ public class Player extends Element {
 		this.acceleration.add(0, Parametros.gravedad);
 		this.applyPhysics(delta);
 		colocarPies();
-		System.out.println(this.velocity.y);
+		//System.out.println(this.velocity.y);
 
 	}
 
@@ -70,13 +74,13 @@ public class Player extends Element {
 
 		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 			this.setAnimation(izqda);
-			this.velocity.add(-walkingSpeed, 0);
+			this.acceleration.add(-walkingSpeed, 0);
 			quieto = false;
 		}
 
 		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
 			this.setAnimation(drcha);
-			this.velocity.add(walkingSpeed, 0);
+			this.acceleration.add(walkingSpeed, 0);
 			quieto = false;
 		}
 		if (quieto) {
@@ -103,31 +107,23 @@ public class Player extends Element {
 		velocity.add( acceleration.x * dt, acceleration.y * dt );
       
         float speed = velocity.len();
-
-        
-        
-      
         
         // decrease speed (decelerate) when not accelerating
       
         
         if (acceleration.len() == 0)
             speed -= deceleration * dt;
-       
 
         // keep speed within set bounds
         speed = MathUtils.clamp(speed, 0, maxSpeed);
 
         // update velocity
-        if (velocity.len() == 0)
+        /*if (velocity.len() == 0)
             velocity.set(speed, 0);
-        else
+        else*/
             velocity.setLength(speed);
-    
-
         // update position according to value stored in velocity vector
         moveBy( velocity.x * dt, velocity.y * dt );
-
         // reset acceleration
         acceleration.set(0,0);  
 		
@@ -135,14 +131,38 @@ public class Player extends Element {
 
 
 	public void colocarPies() {
-		this.pies.setPosition(this.getX(), this.getY());
+		this.pies.setPosition(this.getX()+this.getWidth()/2-this.getWidth()/8, this.getY());
 		
 		
 	}
 	
 	private void salta() {
-		this.acceleration.add(0,maxSpeed);
+		this.acceleration.add(0,fuerzaSalto);
 		this.tocoSuelo=false;
+	}
+
+	@Override
+	public Vector2 preventOverlap(Element other) {
+		
+		Polygon poly1 = this.getBoundaryPolygon();
+		Polygon poly2 = other.getBoundaryPolygon();
+
+		// initial test to improve performance
+		if (!poly1.getBoundingRectangle().overlaps(poly2.getBoundingRectangle()))
+			return null;
+
+		MinimumTranslationVector mtv = new MinimumTranslationVector();
+		boolean polygonOverlap = Intersector.overlapConvexPolygons(poly1, poly2, mtv);
+
+		if (!polygonOverlap)
+			return null;
+
+		this.moveBy(mtv.normal.x * mtv.depth, mtv.normal.y * mtv.depth);
+		
+		if (Math.abs(mtv.normal.x) > Math.abs(mtv.normal.y)) {
+			this.velocity.x = 0;
+		}
+		return mtv.normal;
 	}
 
 }
