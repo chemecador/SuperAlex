@@ -21,8 +21,7 @@ public final class ResourceManager {
 		assets.load("maps/mapa1.tmx", TiledMap.class);
 		//assets.load("maps/mapa2.tmx", TiledMap.class);
         //elementos de mapa
-        //assets.load("maps/Images/arbol.png", Texture.class);
-        assets.load("maps/images/barrel.png", Texture.class);
+		
         //enemigos
         assets.load("enemies/blob.png",Texture.class);
         assets.load("enemies/blob_jump.png",Texture.class);

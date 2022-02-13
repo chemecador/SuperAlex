@@ -32,7 +32,10 @@ public class Player extends Element {
 	public boolean tocoSuelo;
 
 	private float walkingSpeed = 600;
-	private float fuerzaSalto = 62000;
+	private float fuerzaSaltoChiquito = 30000;
+	private float fuerzaSaltoMedio = 60000;
+	private float fuerzaSaltoGrande = 65000;
+	private float maxSpeedHorizontal = 300;
 
 	public Player(float x, float y, Stage s) {
 		super(x, y, s);
@@ -46,7 +49,7 @@ public class Player extends Element {
 		quieto = this.loadFullAnimation("player/depie.png", 1, 1, 0.2f, true);
 		this.setPolygon(6);
 
-		pies = new Element(0, 0, s, this.getWidth()/4, this.getHeight() / 10);
+		pies = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 10);
 		pies.setRectangle();
 
 		balas = new Array<Bala>();
@@ -60,12 +63,12 @@ public class Player extends Element {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		controles();
 		// aplico graviedad
 		this.acceleration.add(0, Parametros.gravedad);
 		this.applyPhysics(delta);
+		controles();
 		colocarPies();
-		//System.out.println(this.velocity.y);
+		// System.out.println(this.velocity.y);
 
 	}
 
@@ -84,66 +87,94 @@ public class Player extends Element {
 			quieto = false;
 		}
 		if (quieto) {
-
 			this.setAnimation(this.quieto);
 		}
-		if (Gdx.input.isKeyPressed(Keys.SPACE) && tocoSuelo) {
-			salta();
-
+		if (Gdx.input.isKeyJustPressed(Keys.C) && tocoSuelo) {
+			this.velocity.x = 0;
+			this.velocity.y = 0;
+			salta(1);
+		}
+		if (Gdx.input.isKeyJustPressed(Keys.V) && tocoSuelo) {
+			this.velocity.x = 0;
+			this.velocity.y = 0;
+			salta(2);
+		}
+		if (Gdx.input.isKeyJustPressed(Keys.B) && tocoSuelo) {
+			this.velocity.x = 0;
+			this.velocity.y = 0;
+			salta(3);
 		}
 
 	}
 
 	@Override
 	public void applyPhysics(float dt) {
+		limitHorizontalSpeed();
+		if (tocoSuelo) {
+			if (Math.abs(velocity.x) > walkingSpeed)
+				if (velocity.x > 0)
+					velocity.x = walkingSpeed;
+				else
+					this.velocity.x = -walkingSpeed;
+		}
 		// apply acceleration
-       
-		  if(tocoSuelo & this.getVelocity().y<0) {
-				
-				this.acceleration.y=0;
-	        }
-		
-		
-		velocity.add( acceleration.x * dt, acceleration.y * dt );
-      
-        float speed = velocity.len();
-        
-        // decrease speed (decelerate) when not accelerating
-      
-        
-        if (acceleration.len() == 0)
-            speed -= deceleration * dt;
+		if (tocoSuelo & this.getVelocity().y < 0) {
+			this.acceleration.y = 0;
+		}
 
-        // keep speed within set bounds
-        speed = MathUtils.clamp(speed, 0, maxSpeed);
+		velocity.add(acceleration.x * dt, acceleration.y * dt);
 
-        // update velocity
-        /*if (velocity.len() == 0)
-            velocity.set(speed, 0);
-        else*/
-            velocity.setLength(speed);
-        // update position according to value stored in velocity vector
-        moveBy( velocity.x * dt, velocity.y * dt );
-        // reset acceleration
-        acceleration.set(0,0);  
+		float speed = velocity.len();
+
+		// decrease speed (decelerate) when not accelerating
+
+		if (acceleration.len() == 0)
+			speed -= deceleration * dt;
+
+		// keep speed within set bounds
+		speed = MathUtils.clamp(speed, 0, maxSpeed);
+
+		// update velocity
+		velocity.setLength(speed);
 		
+		// update position according to value stored in velocity vector
+		moveBy(velocity.x * dt, velocity.y * dt);
+		// reset acceleration
+		acceleration.set(0, 0);
 	}
 
+	private void limitHorizontalSpeed() {
+		if (Math.abs(velocity.x) > maxSpeedHorizontal) {
+			if (velocity.x > 0)
+				this.velocity.x = maxSpeedHorizontal;
+			else
+				this.velocity.x = maxSpeedHorizontal * -1;
+		}
+	}
 
 	public void colocarPies() {
-		this.pies.setPosition(this.getX()+this.getWidth()/2-this.getWidth()/8, this.getY());
-		
-		
+		this.pies.setPosition(this.getX() + this.getWidth() / 2 - this.getWidth() / 8, this.getY());
+
 	}
-	
-	private void salta() {
-		this.acceleration.add(0,fuerzaSalto);
-		this.tocoSuelo=false;
+
+	private void salta(int longitud) {
+		if (longitud == 1) {
+			this.acceleration.add(0, fuerzaSaltoChiquito);
+			this.tocoSuelo = false;			
+		}
+		if (longitud == 2) {
+			this.acceleration.add(0, fuerzaSaltoMedio);
+			this.tocoSuelo = false;
+		}
+		if (longitud == 3) {
+			this.acceleration.add(0, fuerzaSaltoGrande);
+			this.tocoSuelo = false;
+		}
 	}
 
 	@Override
 	public Vector2 preventOverlap(Element other) {
-		
+
 		Polygon poly1 = this.getBoundaryPolygon();
 		Polygon poly2 = other.getBoundaryPolygon();
 
@@ -158,7 +189,7 @@ public class Player extends Element {
 			return null;
 
 		this.moveBy(mtv.normal.x * mtv.depth, mtv.normal.y * mtv.depth);
-		
+
 		if (Math.abs(mtv.normal.x) > Math.abs(mtv.normal.y)) {
 			this.velocity.x = 0;
 		}
