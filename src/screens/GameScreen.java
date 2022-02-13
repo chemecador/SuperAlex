@@ -58,10 +58,9 @@ public class GameScreen extends BScreen {
 		case 1:
 			map = ResourceManager.getMap("maps/mapa1.tmx");
 			break;
-		case 2:
-
+		//case 2:
 			//map = ResourceManager.getMap("maps/mapa2.tmx");
-			break;
+			//break;
 		default:
 			map = ResourceManager.getMap("maps/mapa1.tmx");
 

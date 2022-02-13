@@ -32,12 +32,12 @@ public class Player extends Element {
 	public boolean tocoSuelo;
 
 	private float walkingSpeed = 600;
-	private float fuerzaSalto = 40000;
+	private float fuerzaSalto = 62000;
 
 	public Player(float x, float y, Stage s) {
 		super(x, y, s);
-		this.maxSpeed = 10000;
-		this.deceleration = 2000000;
+		this.maxSpeed = 9000;
+		this.deceleration = 20000000;
 		tocoSuelo = false;
 		frente = loadFullAnimation("player/frente.png", 2, 1, 0.2f, true);
 		espalda = loadFullAnimation("player/agachado.png", 1, 1, 0.2f, true);
