@@ -13,14 +13,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
 import game.Parametros;
+import managers.AudioManager;
 
 public class Player extends Element {
 	private Animation<TextureRegion> frente;
-	private Animation<TextureRegion> espalda;
+	private Animation<TextureRegion> agachado;
 	private Animation<TextureRegion> drcha;
 	private Animation<TextureRegion> izqda;
 	private Animation<TextureRegion> quieto;
-	private Array<Bala> balas;
 
 //gestión de vectores
 	private int totalBalas = 10;
@@ -43,7 +43,7 @@ public class Player extends Element {
 		this.deceleration = 20000000;
 		tocoSuelo = false;
 		frente = loadFullAnimation("player/frente.png", 2, 1, 0.2f, true);
-		espalda = loadFullAnimation("player/agachado.png", 1, 1, 0.2f, true);
+		agachado = loadFullAnimation("player/agachado.png", 1, 1, 0.2f, true);
 		drcha = this.loadFullAnimation("player/derecha.png", 2, 1, 0.3f, true);
 		izqda = this.loadFullAnimation("player/izquierda.png", 2, 1, 0.3f, true);
 		quieto = this.loadFullAnimation("player/depie.png", 1, 1, 0.2f, true);
@@ -51,12 +51,6 @@ public class Player extends Element {
 
 		pies = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 10);
 		pies.setRectangle();
-
-		balas = new Array<Bala>();
-		for (int i = 0; i < this.totalBalas; i++) {
-			balas.add(new Bala(0, 0, s));
-
-		}
 
 	}
 
@@ -74,15 +68,24 @@ public class Player extends Element {
 
 	private void controles() {
 		boolean quieto = true;
-
+		if (Gdx.input.isKeyPressed(Keys.UP)) {
+			Parametros.musicVolume+=0.3f;
+			AudioManager.currentMusic.setVolume(Parametros.musicVolume);
+		}
+		if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+			Parametros.musicVolume-=0.3f;
+			AudioManager.currentMusic.setVolume(Parametros.musicVolume);
+		}
 		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-			this.setAnimation(izqda);
+			if (tocoSuelo)
+				this.setAnimation(izqda);
 			this.acceleration.add(-walkingSpeed, 0);
 			quieto = false;
 		}
 
 		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			this.setAnimation(drcha);
+			if (tocoSuelo)
+				this.setAnimation(drcha);
 			this.acceleration.add(walkingSpeed, 0);
 			quieto = false;
 		}
@@ -90,16 +93,19 @@ public class Player extends Element {
 			this.setAnimation(this.quieto);
 		}
 		if (Gdx.input.isKeyJustPressed(Keys.C) && tocoSuelo) {
+			this.setAnimation(agachado);
 			this.velocity.x = 0;
 			this.velocity.y = 0;
 			salta(1);
 		}
 		if (Gdx.input.isKeyJustPressed(Keys.V) && tocoSuelo) {
+			this.setAnimation(agachado);
 			this.velocity.x = 0;
 			this.velocity.y = 0;
 			salta(2);
 		}
 		if (Gdx.input.isKeyJustPressed(Keys.B) && tocoSuelo) {
+			this.setAnimation(agachado);
 			this.velocity.x = 0;
 			this.velocity.y = 0;
 			salta(3);
@@ -110,12 +116,22 @@ public class Player extends Element {
 	@Override
 	public void applyPhysics(float dt) {
 		limitHorizontalSpeed();
+		if (acceleration.y < 0) {
+			this.setAnimation(agachado);
+		}
+		if (acceleration.y > 0) {
+			this.setAnimation(frente);
+		}
 		if (tocoSuelo) {
-			if (Math.abs(velocity.x) > walkingSpeed)
-				if (velocity.x > 0)
-					velocity.x = walkingSpeed;
+			if (Math.abs(acceleration.x) > walkingSpeed)
+			//acceleration o velocity??
+				if (acceleration.x > 0)
+					acceleration.x = walkingSpeed;
 				else
-					this.velocity.x = -walkingSpeed;
+					this.acceleration.x = -walkingSpeed;
+		}
+		else {
+			this.setAnimation(agachado);
 		}
 		// apply acceleration
 		if (tocoSuelo & this.getVelocity().y < 0) {
@@ -158,6 +174,7 @@ public class Player extends Element {
 	}
 
 	private void salta(int longitud) {
+		AudioManager.playSound("audio/sounds/salto.mp3");
 		if (longitud == 1) {
 			this.acceleration.add(0, fuerzaSaltoChiquito);
 			this.tocoSuelo = false;			

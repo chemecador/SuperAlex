@@ -23,15 +23,12 @@ public final class ResourceManager {
         //elementos de mapa
 		
         //enemigos
-        assets.load("enemies/blob.png",Texture.class);
-        assets.load("enemies/blob_jump.png",Texture.class);
         //jugador
         assets.load("player/frente.png",Texture.class);
         assets.load("player/depie.png",Texture.class);
         assets.load("player/agachado.png",Texture.class);
         assets.load("player/izquierda.png",Texture.class);
         assets.load("player/derecha.png",Texture.class);
-        assets.load("player/Bola.png",Texture.class);
         
         //objetos
         //assets.load("objects/bomb.png",Texture.class);
@@ -41,8 +38,8 @@ public final class ResourceManager {
         
         
         //Audio
-        //assets.load("Audio/Sound/knifeSlice.ogg", Sound.class);
-      //assets.load("Audio/Sound/knifeSlice.ogg", Music.class);
+        assets.load("audio/music/jk.mp3", Music.class);
+        assets.load("audio/sounds/salto.mp3", Sound.class);
         
         //UI
         assets.load("ui/rojo.jpg", Texture.class);

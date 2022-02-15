@@ -17,15 +17,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 
-import elements.Blob;
 import elements.Element;
 import elements.Enemigo;
 import elements.Player;
 import elements.Solid;
 import game.Demo;
 import game.Parametros;
+import managers.AudioManager;
 import managers.ResourceManager;
-import ui.BarraVida;
 
 public class GameScreen extends BScreen {
 
@@ -43,7 +42,7 @@ public class GameScreen extends BScreen {
 	private OrthogonalTiledMapRenderer renderer;
 
 	private Player player;
-	private Label etiquetaVida;
+	//private Label etiquetaVida;
 
 	public GameScreen(Demo game) {
 
@@ -111,9 +110,9 @@ public class GameScreen extends BScreen {
 			props = obj.getProperties();
 			switch (props.get("Enemy").toString()) {
 			case "Blob":
-				Blob blob = new Blob((float) props.get("x"), (float) props.get("y"), mainStage, this);
-				enemigos.add(blob);
-				break;
+				//Blob blob = new Blob((float) props.get("x"), (float) props.get("y"), mainStage, this);
+				//enemigos.add(blob);
+				//break;
 
 			}
 
@@ -122,14 +121,7 @@ public class GameScreen extends BScreen {
 		player = new Player(inicioX, inicioY, mainStage);
 
 		uiStage = new Stage();
-		//barra = new BarraVida(Parametros.getAnchoPantalla() / 50, Parametros.getAltoPantalla() * 9 / 10, this.uiStage);
-		etiquetaVida = new Label("Vida: " + Parametros.vida, uiStyle);
-		etiquetaVida.setPosition(Parametros.getAnchoPantalla()/20, Parametros.getAltoPantalla()/20);
-		uiStage.addActor(etiquetaVida);
-	}
-	
-	private void actualizarInterfaz() {
-		etiquetaVida.setText("Vida : " + Parametros.vida);
+		AudioManager.playMusic("audio/music/jk.mp3");
 	}
 
 	@Override

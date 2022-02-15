@@ -1,0 +1,5 @@
+← : mover izquierda
+→ : mover derecha
+C : salto corto
+V : salto medio
+B : salto largo
