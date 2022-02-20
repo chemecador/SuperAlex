@@ -1,5 +1,7 @@
 package screens;
 
+import com.badlogic.gdx.graphics.Texture;
+
 import game.Demo;
 import managers.ResourceManager;
 
@@ -7,11 +9,13 @@ public class LoadScreen extends BScreen{
 	private float loadDelay=5;
 	private float loadCount=0;
 	
+	
 	public LoadScreen(Demo game){
 		
 	super(game);
 	//this.resourceManager=new ResourceManager();
 	//game.resourceManager=this.resourceManager;
+	
 	ResourceManager.loadAllResources();
 	//while(!ResourceManager.update()){}
 	
@@ -24,7 +28,8 @@ public class LoadScreen extends BScreen{
 		super.render(delta);
 		if(ResourceManager.update()) {
 		
-			game.setScreen(new GameScreen(game));
+			ResourceManager.botones();
+			game.setScreen(new TitleScreen(game));
 			
 		}
 		

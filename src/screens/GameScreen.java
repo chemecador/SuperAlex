@@ -78,6 +78,7 @@ public class GameScreen extends BScreen {
 		renderer = new OrthogonalTiledMapRenderer(map, mainStage.getBatch());
 
 		camara = (OrthographicCamera) mainStage.getCamera();
+		
 		camara.setToOrtho(false, Parametros.getAnchoPantalla() * Parametros.zoom,
 				Parametros.getAltoPantalla() * Parametros.zoom);
 
@@ -173,7 +174,7 @@ public class GameScreen extends BScreen {
 	}
 
 	public void centrarCamara() {
-		this.camara.position.x = player.getX();
+		this.camara.position.x = Parametros.getAnchoPantalla()*5/8;
 		this.camara.position.y = player.getY();
 		camara.update();
 

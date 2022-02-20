@@ -17,7 +17,7 @@ public class Parametros {
  
  
 // public static float zoom=0.24f;
- public static float zoom=2f;
+ public static float zoom=1.3f;
  
  //variables de juego
  

@@ -47,7 +47,7 @@ public class Player extends Element {
 		drcha = this.loadFullAnimation("player/derecha.png", 2, 1, 0.3f, true);
 		izqda = this.loadFullAnimation("player/izquierda.png", 2, 1, 0.3f, true);
 		quieto = this.loadFullAnimation("player/depie.png", 1, 1, 0.2f, true);
-		this.setPolygon(6);
+		//this.setPolygon(4);
 
 		pies = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 10);
 		pies.setRectangle();
@@ -69,24 +69,25 @@ public class Player extends Element {
 	private void controles() {
 		boolean quieto = true;
 		if (Gdx.input.isKeyPressed(Keys.UP)) {
-			Parametros.musicVolume+=0.3f;
+			Parametros.musicVolume += 0.3f;
 			AudioManager.currentMusic.setVolume(Parametros.musicVolume);
 		}
 		if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-			Parametros.musicVolume-=0.3f;
+			Parametros.musicVolume -= 0.3f;
 			AudioManager.currentMusic.setVolume(Parametros.musicVolume);
 		}
 		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-			if (tocoSuelo)
-				this.setAnimation(izqda);
+
+			this.setAnimation(izqda);
 			this.acceleration.add(-walkingSpeed, 0);
+
 			quieto = false;
 		}
 
 		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			if (tocoSuelo)
-				this.setAnimation(drcha);
+			this.setAnimation(drcha);
 			this.acceleration.add(walkingSpeed, 0);
+
 			quieto = false;
 		}
 		if (quieto) {
@@ -116,21 +117,14 @@ public class Player extends Element {
 	@Override
 	public void applyPhysics(float dt) {
 		limitHorizontalSpeed();
-		if (acceleration.y < 0) {
-			this.setAnimation(agachado);
-		}
-		if (acceleration.y > 0) {
-			this.setAnimation(frente);
-		}
 		if (tocoSuelo) {
 			if (Math.abs(acceleration.x) > walkingSpeed)
-			//acceleration o velocity??
+				// acceleration o velocity??
 				if (acceleration.x > 0)
 					acceleration.x = walkingSpeed;
 				else
 					this.acceleration.x = -walkingSpeed;
-		}
-		else {
+		} else {
 			this.setAnimation(agachado);
 		}
 		// apply acceleration
@@ -152,7 +146,7 @@ public class Player extends Element {
 
 		// update velocity
 		velocity.setLength(speed);
-		
+
 		// update position according to value stored in velocity vector
 		moveBy(velocity.x * dt, velocity.y * dt);
 		// reset acceleration
@@ -177,7 +171,7 @@ public class Player extends Element {
 		AudioManager.playSound("audio/sounds/salto.mp3");
 		if (longitud == 1) {
 			this.acceleration.add(0, fuerzaSaltoChiquito);
-			this.tocoSuelo = false;			
+			this.tocoSuelo = false;
 		}
 		if (longitud == 2) {
 			this.acceleration.add(0, fuerzaSaltoMedio);
