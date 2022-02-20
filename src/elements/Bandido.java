@@ -5,24 +5,24 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import screens.GameScreen;
 
-public class Princesa extends Enemigo {
+public class Bandido extends Enemigo {
 
 	private int direccion;
 	private int velocidad;
-	private Animation quieta;
+	private Animation quieto;
 	private Animation izquierda;
 	private Animation derecha;
 	private Element pie;
 	private boolean pisa;
 	private GameScreen nivel;
 
-	public Princesa(float x, float y, Stage s, GameScreen nivel) {
+	public Bandido(float x, float y, Stage s, GameScreen nivel) {
 		super(x, y, s, nivel);
 		// TODO Auto-generated constructor stub
 		this.setEnabled(true);
-		izquierda = loadFullAnimation("enemies/izquierdaPrincesa.png", 2, 1, 0.2f, true);
-		derecha = loadFullAnimation("enemies/derechaPrincesa.png", 2, 1, 0.2f, true);
-		quieta = loadFullAnimation("enemies/izquierdaQuieta.png", 1, 1, 0.2f, true);
+		izquierda = loadFullAnimation("enemies/izquierdaBandido.png", 1, 1, 0.2f, true);
+		derecha = loadFullAnimation("enemies/derechaBandido.png", 2, 1, 0.2f, true);
+		quieto = loadFullAnimation("enemies/derecha.png", 1, 1, 0.2f, true);
 		direccion = -1;
 		pie = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 4);
 		pie.setRectangle();
