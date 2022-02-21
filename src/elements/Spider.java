@@ -12,12 +12,12 @@ public class Spider extends Enemigo {
 	private Animation spider;
 	private Element pie;
 	private boolean pisa;
-	private GameScreen nivel;
 
 	public Spider(float x, float y, Stage s, GameScreen nivel) {
 		super(x, y, s, nivel);
 		// TODO Auto-generated constructor stub
 		this.setEnabled(true);
+		velocidad = 100;
 		spider = loadFullAnimation("enemies/spider.png", 1, 1, 0.2f, true);
 		direccion = -1;
 		pie = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 4);
@@ -25,6 +25,7 @@ public class Spider extends Enemigo {
 		ponerPies();
 
 	}
+
 	private void ponerPies() {
 		if (direccion == -1) {
 			pie.setPosition(this.getX(), this.getY() - this.getHeight() / 8);
@@ -33,6 +34,7 @@ public class Spider extends Enemigo {
 		}
 
 	}
+
 	@Override
 	public void act(float delta) {
 		// TODO Auto-generated method stub
@@ -42,13 +44,10 @@ public class Spider extends Enemigo {
 			if (pie.overlaps(solido)) {
 				pisa = true;
 			}
-
 		}
-
 		if (!pisa) {
 			direccion *= -1;
 		}
-
 		moveBy(direccion * velocidad * delta, 0);
 		ponerPies();
 

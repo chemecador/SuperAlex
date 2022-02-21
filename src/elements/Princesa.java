@@ -14,12 +14,12 @@ public class Princesa extends Enemigo {
 	private Animation derecha;
 	private Element pie;
 	private boolean pisa;
-	private GameScreen nivel;
 
 	public Princesa(float x, float y, Stage s, GameScreen nivel) {
 		super(x, y, s, nivel);
 		// TODO Auto-generated constructor stub
 		this.setEnabled(true);
+		velocidad = 100;
 		izquierda = loadFullAnimation("enemies/izquierdaPrincesa.png", 2, 1, 0.2f, true);
 		derecha = loadFullAnimation("enemies/derechaPrincesa.png", 2, 1, 0.2f, true);
 		quieta = loadFullAnimation("enemies/izquierdaQuieta.png", 1, 1, 0.2f, true);
@@ -29,6 +29,7 @@ public class Princesa extends Enemigo {
 		ponerPies();
 
 	}
+
 	private void ponerPies() {
 		if (direccion == -1) {
 			pie.setPosition(this.getX(), this.getY() - this.getHeight() / 8);
@@ -37,17 +38,16 @@ public class Princesa extends Enemigo {
 		}
 
 	}
+
 	@Override
 	public void act(float delta) {
 		// TODO Auto-generated method stub
 		super.act(delta);
 		pisa = false;
-		for (Solid solido : nivel.suelo) {
-			if (pie.overlaps(solido)) {
-				pisa = true;
-			}
-
-		}
+		/*
+		 * for (Solid solido : nivel.suelo) { if (pie.overlaps(solido)) { pisa = true; }
+		 * }
+		 */
 
 		if (!pisa) {
 			direccion *= -1;

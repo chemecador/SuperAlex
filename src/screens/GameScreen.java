@@ -17,10 +17,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 
+import elements.Caracol;
 import elements.Element;
 import elements.Enemigo;
 import elements.Player;
+import elements.Princesa;
 import elements.Solid;
+import elements.Spider;
 import game.Demo;
 import game.Parametros;
 import managers.AudioManager;
@@ -37,12 +40,11 @@ public class GameScreen extends BScreen {
 	OrthographicCamera camara;
 	private TiledMap map;
 	private int tileWidth, tileHeight, mapWidthInTiles, mapHeightInTiles, mapWidthInPixels, mapHeightInPixels;
-	//private BarraVida barra;
 
 	private OrthogonalTiledMapRenderer renderer;
 
 	private Player player;
-	//private Label etiquetaVida;
+	// private Label etiquetaVida;
 
 	public GameScreen(Demo game) {
 
@@ -57,9 +59,9 @@ public class GameScreen extends BScreen {
 		case 1:
 			map = ResourceManager.getMap("maps/mapa1.tmx");
 			break;
-		//case 2:
-			//map = ResourceManager.getMap("maps/mapa2.tmx");
-			//break;
+		case 2:
+			map = ResourceManager.getMap("maps/mapa2.tmx");
+			break;
 		default:
 			map = ResourceManager.getMap("maps/mapa1.tmx");
 
@@ -78,7 +80,7 @@ public class GameScreen extends BScreen {
 		renderer = new OrthogonalTiledMapRenderer(map, mainStage.getBatch());
 
 		camara = (OrthographicCamera) mainStage.getCamera();
-		
+
 		camara.setToOrtho(false, Parametros.getAnchoPantalla() * Parametros.zoom,
 				Parametros.getAltoPantalla() * Parametros.zoom);
 
@@ -107,14 +109,23 @@ public class GameScreen extends BScreen {
 		}
 
 		enemigos = new Array<Enemigo>();
+
 		for (MapObject obj : getEnemyList()) {
 			props = obj.getProperties();
+			System.out.println(props.get("Enemy").toString());
 			switch (props.get("Enemy").toString()) {
-			case "Blob":
-				//Blob blob = new Blob((float) props.get("x"), (float) props.get("y"), mainStage, this);
-				//enemigos.add(blob);
-				//break;
-
+			case "Caracol":
+				Caracol c = new Caracol((float) props.get("x"), (float) props.get("y"), mainStage, this);
+				enemigos.add(c);
+				break;
+			case "Spider":
+				Spider s = new Spider((float) props.get("x"), (float) props.get("y"), mainStage, this);
+				enemigos.add(s);
+				break;
+			case "Princesa":
+				Princesa p = new Princesa((float) props.get("x"), (float) props.get("y"), mainStage, this);
+				enemigos.add(p);
+				break;
 			}
 
 		}
@@ -147,7 +158,6 @@ public class GameScreen extends BScreen {
 
 	public void colide() {
 		player.tocoSuelo = false;
-		
 
 		for (Solid b : suelo) {
 
@@ -174,7 +184,7 @@ public class GameScreen extends BScreen {
 	}
 
 	public void centrarCamara() {
-		this.camara.position.x = Parametros.getAnchoPantalla()*5/8;
+		this.camara.position.x = Parametros.getAnchoPantalla() * 5 / 8;
 		this.camara.position.y = player.getY();
 		camara.update();
 

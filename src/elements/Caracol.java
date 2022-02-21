@@ -13,12 +13,11 @@ public class Caracol extends Enemigo {
 	private Animation der;
 	private Element pie;
 	private boolean pisa;
-	private GameScreen nivel;
 
 	public Caracol(float x, float y, Stage s, GameScreen nivel) {
 		super(x, y, s, nivel);
-		// TODO Auto-generated constructor stub
 		this.setEnabled(true);
+		velocidad = 100;
 		izq = loadFullAnimation("enemies/caracolIzquierda.png", 1, 1, 0.2f, true);
 		der = loadFullAnimation("enemies/caracolDerecha.png", 1, 1, 0.2f, true);
 		direccion = -1;
@@ -37,11 +36,10 @@ public class Caracol extends Enemigo {
 	}
 	@Override
 	public void act(float delta) {
-		// TODO Auto-generated method stub
 		super.act(delta);
 		pisa = false;
-		for (Solid solido : nivel.suelo) {
-			if (pie.overlaps(solido)) {
+		for (Solid solidoo : nivel.suelo) {
+			if (pie.overlaps(solidoo)) {
 				pisa = true;
 			}
 

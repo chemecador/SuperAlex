@@ -116,21 +116,8 @@ public class Player extends Element {
 
 	@Override
 	public void applyPhysics(float dt) {
-		limitHorizontalSpeed();
-		if (tocoSuelo) {
-			if (Math.abs(acceleration.x) > walkingSpeed)
-				// acceleration o velocity??
-				if (acceleration.x > 0)
-					acceleration.x = walkingSpeed;
-				else
-					this.acceleration.x = -walkingSpeed;
-		} else {
-			this.setAnimation(agachado);
-		}
+		limitHorizontalSpeed();		
 		// apply acceleration
-		if (tocoSuelo & this.getVelocity().y < 0) {
-			this.acceleration.y = 0;
-		}
 
 		velocity.add(acceleration.x * dt, acceleration.y * dt);
 
@@ -146,7 +133,13 @@ public class Player extends Element {
 
 		// update velocity
 		velocity.setLength(speed);
-
+		
+		if (Math.abs(acceleration.x) > walkingSpeed)
+			// acceleration o velocity??
+			if (velocity.x > 0)
+				velocity.x = walkingSpeed;
+			else
+				this.velocity.x = -walkingSpeed;
 		// update position according to value stored in velocity vector
 		moveBy(velocity.x * dt, velocity.y * dt);
 		// reset acceleration
