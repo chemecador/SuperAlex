@@ -16,4 +16,9 @@
    <property name="Enemy" value="Princesa"/>
   </properties>
  </tile>
+ <tile id="200">
+  <properties>
+   <property name="Enemy" value="Bandido"/>
+  </properties>
+ </tile>
 </tileset>

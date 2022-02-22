@@ -17,7 +17,7 @@ public class Caracol extends Enemigo {
 	public Caracol(float x, float y, Stage s, GameScreen nivel) {
 		super(x, y, s, nivel);
 		this.setEnabled(true);
-		velocidad = 100;
+		velocidad = 5;
 		izq = loadFullAnimation("enemies/caracolIzquierda.png", 1, 1, 0.2f, true);
 		der = loadFullAnimation("enemies/caracolDerecha.png", 1, 1, 0.2f, true);
 		direccion = -1;
@@ -29,8 +29,10 @@ public class Caracol extends Enemigo {
 	private void ponerPies() {
 		if (direccion == -1) {
 			pie.setPosition(this.getX(), this.getY() - this.getHeight() / 8);
+			this.setAnimation(izq);
 		} else {
 			pie.setPosition(this.getX() + this.getWidth() * 3 / 4, this.getY() - this.getHeight() / 8);
+			this.setAnimation(der);
 		}
 
 	}

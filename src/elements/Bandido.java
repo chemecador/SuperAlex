@@ -13,48 +13,66 @@ public class Bandido extends Enemigo {
 	private Animation izquierda;
 	private Animation derecha;
 	private Element pie;
+	public Element cabeza;
 	private boolean pisa;
-	private GameScreen nivel;
+	private boolean cabezazo;
 
 	public Bandido(float x, float y, Stage s, GameScreen nivel) {
 		super(x, y, s, nivel);
 		// TODO Auto-generated constructor stub
 		this.setEnabled(true);
-		izquierda = loadFullAnimation("enemies/izquierdaBandido.png", 1, 1, 0.2f, true);
-		derecha = loadFullAnimation("enemies/derechaBandido.png", 2, 1, 0.2f, true);
-		quieto = loadFullAnimation("enemies/derecha.png", 1, 1, 0.2f, true);
+		velocidad = 200;
+		izquierda = loadFullAnimation("enemies/bandidoIzquierda.png", 1, 1, 0.2f, true);
+		derecha = loadFullAnimation("enemies/bandidoDerecha.png", 1, 1, 0.2f, true);
+		quieto = loadFullAnimation("enemies/bandidoIzquierda.png", 1, 1, 0.2f, true);
 		direccion = -1;
 		pie = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 4);
 		pie.setRectangle();
+		cabeza = new Element(0, 0, s, this.getWidth()*4/5, this.getHeight()/8);
+		cabeza.setRectangle();
+		ponerCabeza();
 		ponerPies();
 
 	}
+
+	private void ponerCabeza() {
+		
+		cabeza.setPosition(this.getX() + this.getWidth()*1/10, this.getY() + this.getHeight() * 7 / 8);
+	}
+
 	private void ponerPies() {
 		if (direccion == -1) {
 			pie.setPosition(this.getX(), this.getY() - this.getHeight() / 8);
+			this.setAnimation(izquierda);
 		} else {
 			pie.setPosition(this.getX() + this.getWidth() * 3 / 4, this.getY() - this.getHeight() / 8);
+			this.setAnimation(derecha);
 		}
 
 	}
+
 	@Override
 	public void act(float delta) {
 		// TODO Auto-generated method stub
 		super.act(delta);
 		pisa = false;
+		cabezazo = false;
 		for (Solid solido : nivel.suelo) {
 			if (pie.overlaps(solido)) {
 				pisa = true;
 			}
-
+			if (cabeza.overlaps(solido)) {
+				cabezazo = true;
+			}
 		}
-
-		if (!pisa) {
+		
+		if (!pisa || cabezazo) {
 			direccion *= -1;
 		}
 
 		moveBy(direccion * velocidad * delta, 0);
 		ponerPies();
+		ponerCabeza();
 
 	}
 

@@ -13,7 +13,7 @@ public class Launcher {
 	
 	/***
 	 * 
-	 * ETIQUETAS EN MENU OPCIONES
+	 * GameScreen 179
 	 * 
 	 * 
 	 */

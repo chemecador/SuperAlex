@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="15" height="35" tilewidth="100" tileheight="100" infinite="0" nextlayerid="6" nextobjectid="32">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="15" height="35" tilewidth="100" tileheight="100" infinite="0" nextlayerid="6" nextobjectid="34">
  <tileset firstgid="1" source="tiles.tsx"/>
  <layer id="1" name="Capa de patrones 1" width="15" height="35">
   <data encoding="csv">
@@ -134,7 +134,7 @@
     <property name="name" value="Solid"/>
    </properties>
   </object>
-  <object id="23" x="-8" y="0" width="16" height="2948">
+  <object id="23" x="-13.3333" y="52" width="16" height="2948">
    <properties>
     <property name="name" value="Solid"/>
    </properties>
@@ -144,8 +144,10 @@
     <property name="name" value="Solid"/>
    </properties>
   </object>
-  <object id="27" gid="33" x="298" y="2922" width="100" height="100"/>
-  <object id="29" gid="199" x="1175.67" y="2929.85" width="100" height="100"/>
-  <object id="31" gid="200" x="693.091" y="2451.18" width="100" height="100"/>
+  <object id="27" gid="33" x="1161" y="2928" width="100" height="100"/>
+  <object id="29" gid="199" x="1111.67" y="2112.52" width="100" height="100"/>
+  <object id="31" gid="200" x="89.3333" y="1409.83" width="100" height="100"/>
+  <object id="32" gid="201" x="274" y="2921" width="100" height="100"/>
+  <object id="33" gid="200" x="601" y="2448.67" width="100" height="100"/>
  </objectgroup>
 </map>

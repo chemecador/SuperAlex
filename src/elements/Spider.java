@@ -18,7 +18,7 @@ public class Spider extends Enemigo {
 		// TODO Auto-generated constructor stub
 		this.setEnabled(true);
 		velocidad = 100;
-		spider = loadFullAnimation("enemies/spider.png", 1, 1, 0.2f, true);
+		spider = loadFullAnimation("enemies/spider.png", 2, 1, 0.4f, true);
 		direccion = -1;
 		pie = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 4);
 		pie.setRectangle();

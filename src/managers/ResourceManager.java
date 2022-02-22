@@ -37,13 +37,14 @@ public final class ResourceManager {
         //elementos de mapa
 		
         //enemigos
+		assets.load("enemies/spider.png", Texture.class);
+		assets.load("enemies/bandidoDerecha.png", Texture.class);
+		assets.load("enemies/bandidoIzquierda.png", Texture.class);
 		assets.load("enemies/caracolDerecha.png", Texture.class);
 		assets.load("enemies/caracolIzquierda.png", Texture.class);
-		assets.load("enemies/spider.png", Texture.class);
-        assets.load("enemies/izquierdaPrincesa.png",Texture.class);
-        assets.load("enemies/izquierdaQuieta.png",Texture.class);
-        assets.load("enemies/derechaPrincesa.png",Texture.class);
-        assets.load("enemies/derechaQuieta.png",Texture.class);
+        assets.load("enemies/princesaIzquierda.png",Texture.class);
+        assets.load("enemies/princesaQuieta.png",Texture.class);
+        assets.load("enemies/princesaDerecha.png",Texture.class);
         assets.load("enemies/corazon.png",Texture.class);
         //jugador
         assets.load("player/frente.png",Texture.class);

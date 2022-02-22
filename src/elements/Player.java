@@ -22,10 +22,6 @@ public class Player extends Element {
 	private Animation<TextureRegion> izqda;
 	private Animation<TextureRegion> quieto;
 
-//gestión de vectores
-	private int totalBalas = 10;
-	private int balaActual = 0;
-
 //gestión de tiempos
 
 	public Element pies;
@@ -47,7 +43,7 @@ public class Player extends Element {
 		drcha = this.loadFullAnimation("player/derecha.png", 2, 1, 0.3f, true);
 		izqda = this.loadFullAnimation("player/izquierda.png", 2, 1, 0.3f, true);
 		quieto = this.loadFullAnimation("player/depie.png", 1, 1, 0.2f, true);
-		//this.setPolygon(4);
+		// this.setPolygon(4);
 
 		pies = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 10);
 		pies.setRectangle();
@@ -57,13 +53,10 @@ public class Player extends Element {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		// aplico graviedad
+		controles();
 		this.acceleration.add(0, Parametros.gravedad);
 		this.applyPhysics(delta);
-		controles();
 		colocarPies();
-		// System.out.println(this.velocity.y);
-
 	}
 
 	private void controles() {
@@ -93,19 +86,19 @@ public class Player extends Element {
 		if (quieto) {
 			this.setAnimation(this.quieto);
 		}
-		if (Gdx.input.isKeyJustPressed(Keys.C) && tocoSuelo) {
+		if (Gdx.input.isKeyPressed(Keys.C) && tocoSuelo) {
 			this.setAnimation(agachado);
 			this.velocity.x = 0;
 			this.velocity.y = 0;
 			salta(1);
 		}
-		if (Gdx.input.isKeyJustPressed(Keys.V) && tocoSuelo) {
+		if (Gdx.input.isKeyPressed(Keys.V) && tocoSuelo) {
 			this.setAnimation(agachado);
 			this.velocity.x = 0;
 			this.velocity.y = 0;
 			salta(2);
 		}
-		if (Gdx.input.isKeyJustPressed(Keys.B) && tocoSuelo) {
+		if (Gdx.input.isKeyPressed(Keys.B) && tocoSuelo) {
 			this.setAnimation(agachado);
 			this.velocity.x = 0;
 			this.velocity.y = 0;
@@ -116,8 +109,12 @@ public class Player extends Element {
 
 	@Override
 	public void applyPhysics(float dt) {
-		limitHorizontalSpeed();		
-		// apply acceleration
+		limitHorizontalSpeed();
+		
+		if (tocoSuelo & this.getVelocity().y < 0) {
+			this.acceleration.y = 0;
+			this.velocity.y = 0;
+		}
 
 		velocity.add(acceleration.x * dt, acceleration.y * dt);
 
@@ -133,17 +130,42 @@ public class Player extends Element {
 
 		// update velocity
 		velocity.setLength(speed);
-		
-		if (Math.abs(acceleration.x) > walkingSpeed)
+
+		// update position according to value stored in velocity vector
+		moveBy(velocity.x * dt, velocity.y * dt);
+
+		// reset acceleration
+		acceleration.set(0, 0);
+
+		/*// apply acceleration
+
+		velocity.add(acceleration.x * dt, acceleration.y * dt);
+
+		float speed = velocity.len();
+
+		// decrease speed (decelerate) when not accelerating
+
+		if (acceleration.len() == 0)
+			speed -= deceleration * dt;
+
+		// keep speed within set bounds
+		speed = MathUtils.clamp(speed, 0, maxSpeed);
+
+		// update velocity
+		velocity.setLength(speed);
+
+		if (Math.abs(acceleration.x) > walkingSpeed) {
 			// acceleration o velocity??
-			if (velocity.x > 0)
+			if (velocity.x > 0) {
 				velocity.x = walkingSpeed;
-			else
+			} else {
 				this.velocity.x = -walkingSpeed;
+			}
+		}
 		// update position according to value stored in velocity vector
 		moveBy(velocity.x * dt, velocity.y * dt);
 		// reset acceleration
-		acceleration.set(0, 0);
+		acceleration.set(0, 0);*/
 	}
 
 	private void limitHorizontalSpeed() {

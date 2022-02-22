@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 
+import elements.Bandido;
 import elements.Caracol;
 import elements.Element;
 import elements.Enemigo;
@@ -43,8 +44,8 @@ public class GameScreen extends BScreen {
 
 	private OrthogonalTiledMapRenderer renderer;
 
-	private Player player;
-	// private Label etiquetaVida;
+	public Player player;
+	 private Label lbl;
 
 	public GameScreen(Demo game) {
 
@@ -54,14 +55,14 @@ public class GameScreen extends BScreen {
 		mainStage = new Stage();
 		float inicioX;
 		float inicioY;
-		// System.out.println(Parametros.nivel);
+		
 		switch (Parametros.nivel) {
 		case 1:
 			map = ResourceManager.getMap("maps/mapa1.tmx");
 			break;
 		case 2:
 			map = ResourceManager.getMap("maps/mapa2.tmx");
-			break;
+			break;			
 		default:
 			map = ResourceManager.getMap("maps/mapa1.tmx");
 
@@ -126,6 +127,10 @@ public class GameScreen extends BScreen {
 				Princesa p = new Princesa((float) props.get("x"), (float) props.get("y"), mainStage, this);
 				enemigos.add(p);
 				break;
+			case "Bandido":
+				Bandido b = new Bandido((float) props.get("x"), (float) props.get("y"), mainStage, this);
+				enemigos.add(b);
+				break;
 			}
 
 		}
@@ -133,6 +138,9 @@ public class GameScreen extends BScreen {
 		player = new Player(inicioX, inicioY, mainStage);
 
 		uiStage = new Stage();
+		lbl=new Label("Puntuacion: 0 ",uiStyle);
+        lbl.setPosition(Parametros.getAnchoPantalla()/20, Parametros.getAltoPantalla()/20);
+        uiStage.addActor(lbl);
 		AudioManager.playMusic("audio/music/jk.mp3");
 	}
 
@@ -160,24 +168,30 @@ public class GameScreen extends BScreen {
 		player.tocoSuelo = false;
 
 		for (Solid b : suelo) {
-
 			if (b.getEnabled() && b.overlaps(player)) {
 				player.preventOverlap(b);
-
 				// b.preventOverlap(player);
-
 			}
 
 			if (player.pies.overlaps(b)) {
 				player.tocoSuelo = true;
 			}
-
 		}
-
+		for (Enemigo e : enemigos) {
+			if (e instanceof Bandido) {
+				// if (player.pies.overlaps(((Bandido)e).cabeza)) {}
+				if (e.overlaps(player)) {
+					e.preventOverlap(player);
+					System.out.println("TE PISO");
+					Parametros.nivel = 0;
+					game.setScreen(new GameScreen(game));
+				}
+			}
+		}
 		if (player.overlaps(end)) {
 
 			this.dispose();
-			game.setScreen(new GameScreen(game));
+			game.setScreen(new TitleScreen(game));
 
 		}
 
