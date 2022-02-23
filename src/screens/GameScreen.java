@@ -45,7 +45,7 @@ public class GameScreen extends BScreen {
 	private OrthogonalTiledMapRenderer renderer;
 
 	public Player player;
-	 private Label lbl;
+	private Label lbl;
 
 	public GameScreen(Demo game) {
 
@@ -53,16 +53,14 @@ public class GameScreen extends BScreen {
 
 		Parametros.nivel += 1;
 		mainStage = new Stage();
-		float inicioX;
-		float inicioY;
-		
+
 		switch (Parametros.nivel) {
 		case 1:
 			map = ResourceManager.getMap("maps/mapa1.tmx");
 			break;
 		case 2:
 			map = ResourceManager.getMap("maps/mapa2.tmx");
-			break;			
+			break;
 		default:
 			map = ResourceManager.getMap("maps/mapa1.tmx");
 
@@ -79,41 +77,51 @@ public class GameScreen extends BScreen {
 		mapHeightInPixels = tileHeight * mapHeightInTiles;
 
 		renderer = new OrthogonalTiledMapRenderer(map, mainStage.getBatch());
-
 		camara = (OrthographicCamera) mainStage.getCamera();
-
 		camara.setToOrtho(false, Parametros.getAnchoPantalla() * Parametros.zoom,
 				Parametros.getAltoPantalla() * Parametros.zoom);
 
+		cargarElementos();
+
+
+		uiStage = new Stage();
+		lbl = new Label("Puntuacion: 0 ", uiStyle);
+		lbl.setPosition(Parametros.getAnchoPantalla() / 20, Parametros.getAltoPantalla() / 20);
+		uiStage.addActor(lbl);
+		if(Parametros.musica) {
+			System.out.println("SUENA LA MUSICA");
+			AudioManager.playMusic("audio/music/jk.mp3");
+		} else {
+			System.out.println("NO SUENA");
+		}
+	}
+
+	private void cargarElementos() {
+
+		float inicioX;
+		float inicioY;
+		
 		ArrayList<MapObject> elementos = getRectangleList("Inicio");
 		MapProperties props;
 		props = elementos.get(0).getProperties();
 		inicioX = (float) props.get("x");
 		inicioY = (float) props.get("y");
-
 		elementos = getRectangleList("Final");
 		props = elementos.get(0).getProperties();
 		end = new Solid((float) props.get("x"), (float) props.get("y"), mainStage, (float) props.get("width"),
 				(float) props.get("height"));
-
 		elementos = getRectangleList("Solid");
-
 		Solid solido;
 		suelo = new Array<Solid>();
 		for (MapObject solid : elementos) {
 			props = solid.getProperties();
 			solido = new Solid((float) props.get("x"), (float) props.get("y"), mainStage, (float) props.get("width"),
 					(float) props.get("height"));
-
 			suelo.add(solido);
-
 		}
-
 		enemigos = new Array<Enemigo>();
-
 		for (MapObject obj : getEnemyList()) {
 			props = obj.getProperties();
-			System.out.println(props.get("Enemy").toString());
 			switch (props.get("Enemy").toString()) {
 			case "Caracol":
 				Caracol c = new Caracol((float) props.get("x"), (float) props.get("y"), mainStage, this);
@@ -134,14 +142,8 @@ public class GameScreen extends BScreen {
 			}
 
 		}
-
 		player = new Player(inicioX, inicioY, mainStage);
 
-		uiStage = new Stage();
-		lbl=new Label("Puntuacion: 0 ",uiStyle);
-        lbl.setPosition(Parametros.getAnchoPantalla()/20, Parametros.getAltoPantalla()/20);
-        uiStage.addActor(lbl);
-		AudioManager.playMusic("audio/music/jk.mp3");
 	}
 
 	@Override

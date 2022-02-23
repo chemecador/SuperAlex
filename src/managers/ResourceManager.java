@@ -54,10 +54,9 @@ public final class ResourceManager {
         assets.load("player/derecha.png",Texture.class);
         
         //objetos
-        //assets.load("objects/bomb.png",Texture.class);
-        //assets.load("objects/hookl.png",Texture.class);
-        //assets.load("objects/sword.png",Texture.class);
-        //assets.load("objects/swordA.png",Texture.class);
+        assets.load("ui/boton.png",Texture.class);
+        assets.load("ui/uncheck.png",Texture.class);
+        assets.load("ui/check.png",Texture.class);
         
         
         //Audio
@@ -88,7 +87,7 @@ public final class ResourceManager {
 		buttonStyle=new LabelStyle();
 		buttonStyle.font=fuentePropia;
 		textButtonStyle=new TextButtonStyle();
-		Texture buttonText = ResourceManager.getTexture("enemies/corazon.png");
+		Texture buttonText = ResourceManager.getTexture("ui/boton.png");
 		NinePatch buttonPatch = new NinePatch(buttonText);
 		textButtonStyle.up=new NinePatchDrawable(buttonPatch);
 		textButtonStyle.font=fuentePropia;

@@ -45,6 +45,13 @@ public class TitleScreen extends BScreen {
 		tabla.row();
 
 		TextButton botonOpciones = new TextButton("Opciones", ResourceManager.textButtonStyle);
+		botonOpciones.addListener((Event e) -> {
+			if (!(e instanceof InputEvent) || !((InputEvent) e).getType().equals(Type.touchDown))
+				return false;
+			this.dispose();
+			game.setScreen(new SettingsScreen(game));
+			return false;
+		});
 		tabla.add(botonOpciones);
 		tabla.row();
 		TextButton botonSalir = new TextButton("Salir", ResourceManager.textButtonStyle);
@@ -60,7 +67,6 @@ public class TitleScreen extends BScreen {
 
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
 		super.render(delta);
 
 		uiStage.act();
