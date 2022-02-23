@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="15" height="30" tilewidth="100" tileheight="100" infinite="0" nextlayerid="4" nextobjectid="27">
+<map version="1.8" tiledversion="1.8.0" orientation="orthogonal" renderorder="right-down" width="15" height="30" tilewidth="100" tileheight="100" infinite="0" nextlayerid="4" nextobjectid="28">
+ <tileset firstgid="1" source="tiles.tsx"/>
  <layer id="1" name="Capa de patrones 1" width="15" height="30">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -14,7 +15,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,202,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -155,6 +156,7 @@
     <property name="name" value="Solid"/>
    </properties>
   </object>
+  <object id="27" gid="202" x="1432.34" y="1899" width="16" height="16"/>
  </objectgroup>
  <imagelayer id="3" name="Capa de Imagen 1">
   <image source="nivel2grande.png" width="1545" height="3025"/>

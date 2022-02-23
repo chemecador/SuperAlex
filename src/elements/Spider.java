@@ -10,7 +10,7 @@ public class Spider extends Enemigo {
 	private int direccion;
 	private int velocidad;
 	private Animation spider;
-	private Element pie;
+	private Element pies;
 	private boolean pisa;
 
 	public Spider(float x, float y, Stage s, GameScreen nivel) {
@@ -20,17 +20,17 @@ public class Spider extends Enemigo {
 		velocidad = 100;
 		spider = loadFullAnimation("enemies/spider.png", 2, 1, 0.4f, true);
 		direccion = -1;
-		pie = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 4);
-		pie.setRectangle();
+		pies = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 4);
+		pies.setRectangle();
 		ponerPies();
 
 	}
 
 	private void ponerPies() {
 		if (direccion == -1) {
-			pie.setPosition(this.getX(), this.getY() - this.getHeight() / 8);
+			pies.setPosition(this.getX(), this.getY() - this.getHeight() / 8);
 		} else {
-			pie.setPosition(this.getX() + this.getWidth() * 3 / 4, this.getY() - this.getHeight() / 8);
+			pies.setPosition(this.getX() + this.getWidth() * 3 / 4, this.getY() - this.getHeight() / 8);
 		}
 
 	}
@@ -41,7 +41,7 @@ public class Spider extends Enemigo {
 		super.act(delta);
 		pisa = false;
 		for (Solid solido : nivel.suelo) {
-			if (pie.overlaps(solido)) {
+			if (pies.overlaps(solido)) {
 				pisa = true;
 			}
 		}

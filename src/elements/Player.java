@@ -81,14 +81,7 @@ public class Player extends Element {
 
 	private void controles() {
 		boolean quieto = true;
-		if (Gdx.input.isKeyPressed(Keys.UP)) {
-			Parametros.musicVolume += 0.3f;
-			AudioManager.currentMusic.setVolume(Parametros.musicVolume);
-		}
-		if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-			Parametros.musicVolume -= 0.3f;
-			AudioManager.currentMusic.setVolume(Parametros.musicVolume);
-		}
+			//AudioManager.currentMusic.setVolume(Parametros.musicVolume)
 		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 
 			this.setAnimation(izqda);

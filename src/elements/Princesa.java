@@ -28,7 +28,7 @@ public class Princesa extends Enemigo {
 	private Animation quieta;
 	private Animation izquierda;
 	private Animation derecha;
-	private Element pie;
+	private Element pies;
 	private boolean pisa;
 
 	public Princesa(float x, float y, Stage s, GameScreen nivel) {
@@ -48,8 +48,8 @@ public class Princesa extends Enemigo {
 		derecha = loadFullAnimation("enemies/princesaDerecha.png", 2, 1, 0.2f, true);
 		quieta = loadFullAnimation("enemies/princesaQuieta.png", 1, 1, 0.2f, true);
 		direccion = -1;
-		pie = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 4);
-		pie.setRectangle();
+		pies = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 4);
+		pies.setRectangle();
 		ponerPies();
 		
 		for(int i=0; i<numCorazones; i++) {
@@ -62,10 +62,10 @@ public class Princesa extends Enemigo {
 	private void ponerPies() {
 		if (direccion == -1) {
 			this.setAnimation(izquierda);
-			pie.setPosition(this.getX(), this.getY() - this.getHeight() / 8);
+			pies.setPosition(this.getX(), this.getY() - this.getHeight() / 8);
 		} else {
 			this.setAnimation(derecha);
-			pie.setPosition(this.getX() + this.getWidth() * 3 / 4, this.getY() - this.getHeight() / 8);
+			pies.setPosition(this.getX() + this.getWidth() * 3 / 4, this.getY() - this.getHeight() / 8);
 		}
 
 	}
@@ -76,7 +76,7 @@ public class Princesa extends Enemigo {
 		pisa = false;
 
 		for (Solid solido : nivel.suelo) {
-			if (pie.overlaps(solido)) {
+			if (pies.overlaps(solido)) {
 				pisa = true;
 			}
 		}

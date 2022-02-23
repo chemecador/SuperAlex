@@ -52,7 +52,7 @@ public class SettingsScreen extends BScreen {
 	}
 
 	private void ponerBotonVolver() {
-		volver = new TextButton("Volver", ResourceManager.textButtonStyle);
+		volver = new TextButton("Volver", ResourceManager.getBoton("ui/rojo.jpg"));
 		volver.setPosition(Parametros.getAnchoPantalla() /20, Parametros.getAltoPantalla() /20);
 		volver.addListener((Event e) -> {
 			if (!(e instanceof InputEvent) || !((InputEvent) e).getType().equals(Type.touchDown))
@@ -80,8 +80,6 @@ public class SettingsScreen extends BScreen {
 			if (!(e instanceof InputEvent) || !((InputEvent) e).getType().equals(Type.touchDown))
 				return false;
 			Parametros.musica = !musicaTB.isChecked();
-			if (Parametros.musica) System.out.println("SIII");
-			else System.out.println("NOOOO");
 			return false;
 		});
 		musicaTB.setPosition(Parametros.getAnchoPantalla() * 2 / 4, Parametros.getAltoPantalla() * 6 / 11);

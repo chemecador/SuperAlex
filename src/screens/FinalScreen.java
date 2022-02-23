@@ -28,7 +28,7 @@ public class FinalScreen extends BScreen {
 		tabla.setFillParent(true);
 
 		this.uiStage.addActor(tabla);
-		TextButton volver = new TextButton("Volver a jugar",ResourceManager.textButtonStyle /*ResourceManager.getBoton(Color.GRAY)*/);
+		TextButton volver = new TextButton("Volver a jugar", ResourceManager.getBoton("ui/rojo.jpg"));
 		volver.addListener((Event e) -> {
 			if (!(e instanceof InputEvent) || !((InputEvent) e).getType().equals(Type.touchDown))
 				return false;
@@ -36,7 +36,17 @@ public class FinalScreen extends BScreen {
 			game.setScreen(new TitleScreen(game));
 			return false;
 		});
-		tabla.add(volver);
+		tabla.add(volver).fill().height(Parametros.ALTURA_BOTON).spaceBottom(Parametros.ESPACIADO);
+		tabla.row();
+		TextButton botonSalir = new TextButton("Salir", ResourceManager.textButtonStyle);
+		botonSalir.addListener((Event e) -> {
+			if (!(e instanceof InputEvent) || !((InputEvent) e).getType().equals(Type.touchDown))
+				return false;
+			this.dispose();
+			Gdx.app.exit();
+			return false;
+		});
+		tabla.add(botonSalir).fill().height(Parametros.ALTURA_BOTON).spaceBottom(Parametros.ESPACIADO);
 	}
 
 	@Override

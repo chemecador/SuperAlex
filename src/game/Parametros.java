@@ -7,6 +7,9 @@ public class Parametros {
 	private static int anchoPantalla = 1200;
 	private static int altoPantalla = 900;
 
+	public static final int ALTURA_BOTON = 55;
+	public static final int ESPACIADO = 40;
+
 	public static boolean debug = true;
 
 	// Audio;
@@ -23,7 +26,7 @@ public class Parametros {
 	public static int gravedad = -1000;
 	public static float jugadorx = 0;
 	public static float jugadory = 0;
-	public static int vidas = 1;
+	public static int vidas = 3;
 
 	public static int getAnchoPantalla() {
 		return anchoPantalla;

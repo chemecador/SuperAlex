@@ -18,8 +18,6 @@ import game.Parametros;
 import managers.ResourceManager;
 
 public class TitleScreen extends BScreen {
-	private static final int ALTURA_BOTON = 55;
-	private static final int ESPACIADO = 40;
 	private Table tabla;
 	private Texture background;
 
@@ -46,7 +44,7 @@ public class TitleScreen extends BScreen {
 			game.setScreen(new GameScreen(game));
 			return false;
 		});
-		tabla.add(boton).fill().height(ALTURA_BOTON).spaceBottom(ESPACIADO);
+		tabla.add(boton).fill().height(Parametros.ALTURA_BOTON).spaceBottom(Parametros.ESPACIADO);
 		tabla.row();
 
 		TextButton botonOpciones = new TextButton("Opciones", ResourceManager.textButtonStyle);
@@ -57,7 +55,7 @@ public class TitleScreen extends BScreen {
 			game.setScreen(new SettingsScreen(game));
 			return false;
 		});
-		tabla.add(botonOpciones).fill().height(ALTURA_BOTON).spaceBottom(ESPACIADO);
+		tabla.add(botonOpciones).fill().height(Parametros.ALTURA_BOTON).spaceBottom(Parametros.ESPACIADO);
 		tabla.row();
 		TextButton botonSalir = new TextButton("Salir", ResourceManager.textButtonStyle);
 		botonSalir.addListener((Event e) -> {
@@ -67,7 +65,7 @@ public class TitleScreen extends BScreen {
 			Gdx.app.exit();
 			return false;
 		});
-		tabla.add(botonSalir).fill().height(ALTURA_BOTON).spaceBottom(ESPACIADO);
+		tabla.add(botonSalir).fill().height(Parametros.ALTURA_BOTON).spaceBottom(Parametros.ESPACIADO);
 	}
 
 	@Override

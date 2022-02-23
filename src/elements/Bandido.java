@@ -12,7 +12,7 @@ public class Bandido extends Enemigo {
 	private Animation quieto;
 	private Animation izquierda;
 	private Animation derecha;
-	private Element pie;
+	public Element pies;
 	public Element cabeza;
 	private boolean pisa;
 	private boolean cabezazo;
@@ -26,8 +26,8 @@ public class Bandido extends Enemigo {
 		derecha = loadFullAnimation("enemies/bandidoDerecha.png", 1, 1, 0.2f, true);
 		quieto = loadFullAnimation("enemies/bandidoIzquierda.png", 1, 1, 0.2f, true);
 		direccion = -1;
-		pie = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 4);
-		pie.setRectangle();
+		pies = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 4);
+		pies.setRectangle();
 		cabeza = new Element(0, 0, s, this.getWidth()*4/5, this.getHeight()/8);
 		cabeza.setRectangle();
 		ponerCabeza();
@@ -42,10 +42,10 @@ public class Bandido extends Enemigo {
 
 	private void ponerPies() {
 		if (direccion == -1) {
-			pie.setPosition(this.getX(), this.getY() - this.getHeight() / 8);
+			pies.setPosition(this.getX(), this.getY() - this.getHeight() / 8);
 			this.setAnimation(izquierda);
 		} else {
-			pie.setPosition(this.getX() + this.getWidth() * 3 / 4, this.getY() - this.getHeight() / 8);
+			pies.setPosition(this.getX() + this.getWidth() * 3 / 4, this.getY() - this.getHeight() / 8);
 			this.setAnimation(derecha);
 		}
 
@@ -58,7 +58,7 @@ public class Bandido extends Enemigo {
 		pisa = false;
 		cabezazo = false;
 		for (Solid solido : nivel.suelo) {
-			if (pie.overlaps(solido)) {
+			if (pies.overlaps(solido)) {
 				pisa = true;
 			}
 			if (cabeza.overlaps(solido)) {

@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 
 import elements.Bandido;
+import elements.Bnet;
 import elements.Caracol;
 import elements.Element;
 import elements.Enemigo;
@@ -54,6 +55,7 @@ public class GameScreen extends BScreen {
 
 		Parametros.nivel += 1;
 		mainStage = new Stage();
+		uiStage = new Stage();
 
 		switch (Parametros.nivel) {
 		case 1:
@@ -64,10 +66,8 @@ public class GameScreen extends BScreen {
 			break;
 		default:
 			map = ResourceManager.getMap("maps/mapa1.tmx");
-
 			break;
 		}
-
 		MapProperties properties = map.getProperties();
 
 		tileWidth = properties.get("tilewidth", Integer.class);
@@ -83,17 +83,21 @@ public class GameScreen extends BScreen {
 				Parametros.getAltoPantalla() * Parametros.zoom);
 
 		cargarElementos();
+		cargarEtiquetas();
+		if (Parametros.musica) {
+			AudioManager.playMusic("audio/music/jk.mp3");
+		}
+	}
 
-		uiStage = new Stage();
-		lbl = new Label("Vidas: " + Parametros.vidas, uiStyle);
+	private void cargarEtiquetas() {
+		lbl = new Label("Vidas: " + Parametros.vidas, ResourceManager.buttonStyle);
 		lbl.setPosition(Parametros.getAnchoPantalla() / 20, Parametros.getAltoPantalla() / 20);
 		uiStage.addActor(lbl);
-		if (Parametros.musica) {
-			System.out.println("SUENA LA MUSICA");
-			AudioManager.playMusic("audio/music/jk.mp3");
-		} else {
-			System.out.println("NO SUENA");
-		}
+
+		consejo = new Label("Esto es un consejo", ResourceManager.buttonStyle);
+		consejo.setPosition(Parametros.getAnchoPantalla() / 3, Parametros.getAltoPantalla() / 20);
+		consejo.setVisible(false);
+		uiStage.addActor(consejo);
 	}
 
 	private void cargarElementos() {
@@ -139,6 +143,10 @@ public class GameScreen extends BScreen {
 				Bandido b = new Bandido((float) props.get("x"), (float) props.get("y"), mainStage, this);
 				enemigos.add(b);
 				break;
+			case "Bnet":
+				Bnet bnet = new Bnet((float) props.get("x"), (float) props.get("y"), mainStage, this);
+				enemigos.add(bnet);
+				break;
 			}
 
 		}
@@ -168,13 +176,11 @@ public class GameScreen extends BScreen {
 
 	public void colide() {
 		player.tocoSuelo = false;
-
 		for (Solid b : suelo) {
 			if (b.getEnabled() && b.overlaps(player)) {
 				player.preventOverlap(b);
 				// b.preventOverlap(player);
 			}
-
 			if (player.pies.overlaps(b)) {
 				player.tocoSuelo = true;
 			}
@@ -182,16 +188,21 @@ public class GameScreen extends BScreen {
 		for (Enemigo e : enemigos) {
 			if (e instanceof Bandido) {
 				// if (player.pies.overlaps(((Bandido)e).cabeza)) {}
-				if (e.overlaps(player)) {
+				if (((Bandido) e).pies.overlaps(player.pies) && !player.pies.overlaps(((Bandido) e).cabeza)) {
 					e.preventOverlap(player);
 					Parametros.vidas--;
 					if (Parametros.vidas == 0) {
 						this.dispose();
 						game.setScreen(new FinalScreen(game));
 					} else {
+						consejo.setText("¡AU! No debería acercarme a ese bandido otra vez");
+						consejo.setVisible(true);
 						Parametros.nivel = 0;
 						game.setScreen(new GameScreen(game));
 					}
+				}
+				if(player.pies.overlaps(((Bandido) e).cabeza)) {
+					e.setEnabled(false);
 				}
 			}
 		}
