@@ -66,11 +66,22 @@ public final class ResourceManager {
         //UI
         assets.load("ui/rojo.jpg", Texture.class);
         assets.load("ui/morado.jpg", Texture.class);
+        assets.load("ui/gris.png", Texture.class);
+        assets.load("ui/fondoinicio.png",Texture.class);
+        assets.load("ui/fondofinal.png",Texture.class);
  
 	//añadir más elementos
 	
 	}
 	
+	public static TextButtonStyle getBoton(Color color) {
+		TextButtonStyle boton = new TextButtonStyle();
+		Texture buttonText = ResourceManager.getTexture("ui/rojo.jpg");
+		NinePatch buttonPatch = new NinePatch(buttonText);
+		textButtonStyle.up=new NinePatchDrawable(buttonPatch);
+		textButtonStyle.font=fuentePropia;
+		return boton;
+	}
 
 	public static void botones() {
 		
@@ -87,7 +98,7 @@ public final class ResourceManager {
 		buttonStyle=new LabelStyle();
 		buttonStyle.font=fuentePropia;
 		textButtonStyle=new TextButtonStyle();
-		Texture buttonText = ResourceManager.getTexture("ui/boton.png");
+		Texture buttonText = ResourceManager.getTexture("ui/rojo.jpg");
 		NinePatch buttonPatch = new NinePatch(buttonText);
 		textButtonStyle.up=new NinePatchDrawable(buttonPatch);
 		textButtonStyle.font=fuentePropia;

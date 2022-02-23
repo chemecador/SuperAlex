@@ -2,9 +2,7 @@ package game;
 
 public class Parametros {
 
-//Screen
-	// private static int anchoPantalla=1200;
-	// private static int altoPantalla=900;
+	//Screen
 
 	private static int anchoPantalla = 1200;
 	private static int altoPantalla = 900;
@@ -16,19 +14,16 @@ public class Parametros {
 	public static float musicVolume = 0.1f;
 	public static float soundVolume = 1;
 
-// public static float zoom=0.24f;
 	public static float zoom = 1.3f;
 
-	// variables de juego
-
+	//Variables de juego
 	public static int nivel = 0;
-
+	
+	//Variables del jugador
 	public static int gravedad = -1000;
 	public static float jugadorx = 0;
 	public static float jugadory = 0;
-	public static int vida = 50;
-	public static int maxVida = 50;
-	public static int puntuacion = 0;
+	public static int vidas = 1;
 
 	public static int getAnchoPantalla() {
 		return anchoPantalla;

@@ -46,6 +46,7 @@ public class GameScreen extends BScreen {
 
 	public Player player;
 	private Label lbl;
+	private Label consejo;
 
 	public GameScreen(Demo game) {
 
@@ -83,12 +84,11 @@ public class GameScreen extends BScreen {
 
 		cargarElementos();
 
-
 		uiStage = new Stage();
-		lbl = new Label("Puntuacion: 0 ", uiStyle);
+		lbl = new Label("Vidas: " + Parametros.vidas, uiStyle);
 		lbl.setPosition(Parametros.getAnchoPantalla() / 20, Parametros.getAltoPantalla() / 20);
 		uiStage.addActor(lbl);
-		if(Parametros.musica) {
+		if (Parametros.musica) {
 			System.out.println("SUENA LA MUSICA");
 			AudioManager.playMusic("audio/music/jk.mp3");
 		} else {
@@ -100,7 +100,7 @@ public class GameScreen extends BScreen {
 
 		float inicioX;
 		float inicioY;
-		
+
 		ArrayList<MapObject> elementos = getRectangleList("Inicio");
 		MapProperties props;
 		props = elementos.get(0).getProperties();
@@ -184,9 +184,14 @@ public class GameScreen extends BScreen {
 				// if (player.pies.overlaps(((Bandido)e).cabeza)) {}
 				if (e.overlaps(player)) {
 					e.preventOverlap(player);
-					System.out.println("TE PISO");
-					Parametros.nivel = 0;
-					game.setScreen(new GameScreen(game));
+					Parametros.vidas--;
+					if (Parametros.vidas == 0) {
+						this.dispose();
+						game.setScreen(new FinalScreen(game));
+					} else {
+						Parametros.nivel = 0;
+						game.setScreen(new GameScreen(game));
+					}
 				}
 			}
 		}

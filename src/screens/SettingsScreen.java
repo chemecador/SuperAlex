@@ -1,6 +1,5 @@
 package screens;
 
-import javax.swing.JFrame;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -8,13 +7,10 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
@@ -24,7 +20,6 @@ import managers.ResourceManager;
 
 public class SettingsScreen extends BScreen {
 
-	private Label titulo;
 	private Label lbl;
 	private Label musica;
 	private Label volumen;
@@ -32,12 +27,12 @@ public class SettingsScreen extends BScreen {
 	private TextButtonStyle musicaTBS;
 	private TextButton musicaTB;
 	private TextButton volver;
-	private boolean check;
+	private Texture background;
 	
 	public SettingsScreen(Demo game) {
 		super(game);
-		check = false;
-		settingsStyle = new LabelStyle(ResourceManager.fuentePropia, Color.RED);
+		this.background = new Texture("ui/fondoinicio.png");
+		settingsStyle = new LabelStyle(ResourceManager.fuentePropia, Color.WHITE);
 		uiStage = new Stage();
 		lbl = new Label("Opciones", settingsStyle);
 		lbl.setPosition(Parametros.getAnchoPantalla() * 2 / 5, Parametros.getAltoPantalla() * 4 / 5);
@@ -97,7 +92,9 @@ public class SettingsScreen extends BScreen {
 	public void render(float delta) {
 		super.render(delta);
 		uiStage.act();
-		uiStage.draw();
-
+        uiStage.getBatch().begin();
+        uiStage.getBatch().draw(background, 0, 0, Parametros.getAnchoPantalla(), Parametros.getAltoPantalla());
+        uiStage.getBatch().end();
+        uiStage.draw();
 	}
 }

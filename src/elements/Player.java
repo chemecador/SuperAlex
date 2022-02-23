@@ -43,11 +43,31 @@ public class Player extends Element {
 		drcha = this.loadFullAnimation("player/derecha.png", 2, 1, 0.3f, true);
 		izqda = this.loadFullAnimation("player/izquierda.png", 2, 1, 0.3f, true);
 		quieto = this.loadFullAnimation("player/depie.png", 1, 1, 0.2f, true);
-		// this.setPolygon(4);
+		this.setRectangle();
 
 		pies = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 10);
 		pies.setRectangle();
 
+	}
+
+	@Override
+	public void setRectangle() {
+
+		float w, h;
+		if (this.polyWidth != getWidth() && this.polyWidth > 0) {
+			w = this.polyWidth;
+		} else {
+			w = this.getWidth();
+		}
+		if (this.polyHigh != this.getHeight() && this.polyHigh > 0) {
+			h = this.polyHigh;
+		} else {
+			h = getHeight();
+		}
+		w = w / 2;
+		float[] vertices = { padX + 25, padY, w - padX + 25, padY, w - padX + 25, h - padY, padX + 25, h - padY };
+		colision = new Polygon(vertices);
+		this.setOrigin(w / 2, h / 2);
 	}
 
 	@Override
@@ -110,7 +130,7 @@ public class Player extends Element {
 	@Override
 	public void applyPhysics(float dt) {
 		limitHorizontalSpeed();
-		
+
 		if (tocoSuelo & this.getVelocity().y < 0) {
 			this.acceleration.y = 0;
 			this.velocity.y = 0;
@@ -137,35 +157,27 @@ public class Player extends Element {
 		// reset acceleration
 		acceleration.set(0, 0);
 
-		/*// apply acceleration
-
-		velocity.add(acceleration.x * dt, acceleration.y * dt);
-
-		float speed = velocity.len();
-
-		// decrease speed (decelerate) when not accelerating
-
-		if (acceleration.len() == 0)
-			speed -= deceleration * dt;
-
-		// keep speed within set bounds
-		speed = MathUtils.clamp(speed, 0, maxSpeed);
-
-		// update velocity
-		velocity.setLength(speed);
-
-		if (Math.abs(acceleration.x) > walkingSpeed) {
-			// acceleration o velocity??
-			if (velocity.x > 0) {
-				velocity.x = walkingSpeed;
-			} else {
-				this.velocity.x = -walkingSpeed;
-			}
-		}
-		// update position according to value stored in velocity vector
-		moveBy(velocity.x * dt, velocity.y * dt);
-		// reset acceleration
-		acceleration.set(0, 0);*/
+		/*
+		 * // apply acceleration
+		 * 
+		 * velocity.add(acceleration.x * dt, acceleration.y * dt);
+		 * 
+		 * float speed = velocity.len();
+		 * 
+		 * // decrease speed (decelerate) when not accelerating
+		 * 
+		 * if (acceleration.len() == 0) speed -= deceleration * dt;
+		 * 
+		 * // keep speed within set bounds speed = MathUtils.clamp(speed, 0, maxSpeed);
+		 * 
+		 * // update velocity velocity.setLength(speed);
+		 * 
+		 * if (Math.abs(acceleration.x) > walkingSpeed) { // acceleration o velocity??
+		 * if (velocity.x > 0) { velocity.x = walkingSpeed; } else { this.velocity.x =
+		 * -walkingSpeed; } } // update position according to value stored in velocity
+		 * vector moveBy(velocity.x * dt, velocity.y * dt); // reset acceleration
+		 * acceleration.set(0, 0);
+		 */
 	}
 
 	private void limitHorizontalSpeed() {
