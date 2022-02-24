@@ -36,7 +36,9 @@ public class GameScreen extends BScreen {
 	Stage mainStage;
 	Stage uiStage;
 	public Array<Solid> suelo;
+	public Array<Solid> paredes;
 	public Array<Enemigo> enemigos;
+	public static boolean isAlive;
 	Solid end;
 
 	OrthographicCamera camara;
@@ -52,7 +54,7 @@ public class GameScreen extends BScreen {
 	public GameScreen(Demo game) {
 
 		super(game);
-
+		isAlive = true;
 		Parametros.nivel += 1;
 		mainStage = new Stage();
 		uiStage = new Stage();
@@ -114,6 +116,8 @@ public class GameScreen extends BScreen {
 		props = elementos.get(0).getProperties();
 		end = new Solid((float) props.get("x"), (float) props.get("y"), mainStage, (float) props.get("width"),
 				(float) props.get("height"));
+		
+		
 		elementos = getRectangleList("Solid");
 		Solid solido;
 		suelo = new Array<Solid>();
@@ -123,6 +127,17 @@ public class GameScreen extends BScreen {
 					(float) props.get("height"));
 			suelo.add(solido);
 		}
+		
+		elementos = getRectangleList("Pared");
+		paredes = new Array<Solid>();
+		for (MapObject solid : elementos) {
+			props = solid.getProperties();
+			solido = new Solid((float) props.get("x"), (float) props.get("y"), mainStage, (float) props.get("width"),
+					(float) props.get("height"));
+			paredes.add(solido);
+		}
+		
+		
 		enemigos = new Array<Enemigo>();
 		for (MapObject obj : getEnemyList()) {
 			props = obj.getProperties();
@@ -148,7 +163,6 @@ public class GameScreen extends BScreen {
 				enemigos.add(bnet);
 				break;
 			}
-
 		}
 		player = new Player(inicioX, inicioY, mainStage);
 
@@ -166,6 +180,16 @@ public class GameScreen extends BScreen {
 		player.colocarPies();
 
 		centrarCamara();
+
+		if (!isAlive) {
+			if (Parametros.vidas == 0) {
+				dispose();
+				game.setScreen(new FinalScreen(game));
+			} else {
+				Parametros.nivel = 0;
+				game.setScreen(new GameScreen(game));
+			}
+		}
 		renderer.setView(camara);
 		renderer.render();
 
@@ -185,32 +209,40 @@ public class GameScreen extends BScreen {
 				player.tocoSuelo = true;
 			}
 		}
-		for (Enemigo e : enemigos) {
-			if (e instanceof Bandido) {
-				// if (player.pies.overlaps(((Bandido)e).cabeza)) {}
-				if (((Bandido) e).pies.overlaps(player.pies) && !player.pies.overlaps(((Bandido) e).cabeza)) {
-					e.preventOverlap(player);
-					Parametros.vidas--;
-					if (Parametros.vidas == 0) {
-						this.dispose();
-						game.setScreen(new FinalScreen(game));
-					} else {
-						consejo.setText("¡AU! No debería acercarme a ese bandido otra vez");
-						consejo.setVisible(true);
-						Parametros.nivel = 0;
-						game.setScreen(new GameScreen(game));
-					}
-				}
-				if(player.pies.overlaps(((Bandido) e).cabeza)) {
-					e.setEnabled(false);
-				}
-			}
-		}
+		pelear();
 		if (player.overlaps(end)) {
 
 			this.dispose();
 			game.setScreen(new TitleScreen(game));
 
+		}
+
+	}
+
+	private void pelear() {
+		for (Enemigo e : enemigos) {
+			if (e.overlaps(player) && e.peligroso) {
+				player.preventOverlap(e);
+				Parametros.vidas--;
+				if (Parametros.vidas == 0) {
+					this.dispose();
+					game.setScreen(new FinalScreen(game));
+				} else {
+					consejo.setText("Debo tener cuidado con ese enemigo, es peligroso");
+					consejo.setVisible(true);
+					Parametros.nivel = 0;
+					game.setScreen(new GameScreen(game));
+				}
+			}
+			if (e.overlaps(player) && !e.peligroso) {
+				player.preventOverlap(e);
+				e.preventOverlap(player);
+			}
+			if (e instanceof Bandido && e.isAlive()) {
+				if (player.pies.overlaps(((Bandido) e).cabeza)) {
+					e.morir();
+				}
+			}
 		}
 
 	}

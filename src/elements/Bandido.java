@@ -15,12 +15,12 @@ public class Bandido extends Enemigo {
 	public Element pies;
 	public Element cabeza;
 	private boolean pisa;
-	private boolean cabezazo;
 
 	public Bandido(float x, float y, Stage s, GameScreen nivel) {
 		super(x, y, s, nivel);
 		// TODO Auto-generated constructor stub
-		this.setEnabled(true);
+		peligroso = true;
+		setEnabled(true);
 		velocidad = 200;
 		izquierda = loadFullAnimation("enemies/bandidoIzquierda.png", 1, 1, 0.2f, true);
 		derecha = loadFullAnimation("enemies/bandidoDerecha.png", 1, 1, 0.2f, true);
@@ -28,7 +28,7 @@ public class Bandido extends Enemigo {
 		direccion = -1;
 		pies = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 4);
 		pies.setRectangle();
-		cabeza = new Element(0, 0, s, this.getWidth()*4/5, this.getHeight()/8);
+		cabeza = new Element(0, 0, s, this.getWidth()/3, this.getHeight()/8);
 		cabeza.setRectangle();
 		ponerCabeza();
 		ponerPies();
@@ -37,7 +37,7 @@ public class Bandido extends Enemigo {
 
 	private void ponerCabeza() {
 		
-		cabeza.setPosition(this.getX() + this.getWidth()*1/10, this.getY() + this.getHeight() * 7 / 8);
+		cabeza.setPosition(this.getX() + this.getWidth()*4/12, this.getY() + this.getHeight() * 7 / 8);
 	}
 
 	private void ponerPies() {
@@ -56,17 +56,20 @@ public class Bandido extends Enemigo {
 		// TODO Auto-generated method stub
 		super.act(delta);
 		pisa = false;
-		cabezazo = false;
+
+		for (Solid pared : nivel.paredes) {
+			if (pies.overlaps(pared)) {
+				direccion *= -1;
+				break;
+			}
+		}
 		for (Solid solido : nivel.suelo) {
 			if (pies.overlaps(solido)) {
 				pisa = true;
 			}
-			if (cabeza.overlaps(solido)) {
-				cabezazo = true;
-			}
 		}
 		
-		if (!pisa || cabezazo) {
+		if (!pisa) {
 			direccion *= -1;
 		}
 

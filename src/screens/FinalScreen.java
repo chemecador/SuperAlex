@@ -23,6 +23,7 @@ public class FinalScreen extends BScreen {
 
 	public FinalScreen(Demo game) {
 		super(game);
+		Parametros.nivel = 0;
 		this.background = new Texture("ui/fondofinal.png");
 		tabla = new Table();
 		tabla.setFillParent(true);

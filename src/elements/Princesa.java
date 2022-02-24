@@ -34,6 +34,7 @@ public class Princesa extends Enemigo {
 	public Princesa(float x, float y, Stage s, GameScreen nivel) {
 		super(x, y, s, nivel);
 		this.setEnabled(true);
+		peligroso = true;
 		persiguiendo = false;
 		cuentaComportamiento = 0;
 		tiempoComportamiento = 0.5f;
@@ -75,6 +76,13 @@ public class Princesa extends Enemigo {
 		super.act(delta);
 		pisa = false;
 
+		for (Solid pared : nivel.paredes) {
+			if (pies.overlaps(pared)) {
+				direccion *= -1;
+				break;
+			}
+		}
+		
 		for (Solid solido : nivel.suelo) {
 			if (pies.overlaps(solido)) {
 				pisa = true;
@@ -134,7 +142,8 @@ public class Princesa extends Enemigo {
 		}
 		for (Corazon c : corazones) {
 			if (c.getEnabled() && c.overlaps(nivel.player)) {
-				System.out.println("te mato");
+				Parametros.nivel--;
+				GameScreen.isAlive = false;
 				c.setEnabled(false);
 
 			}

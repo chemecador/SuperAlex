@@ -11,11 +11,11 @@ public class Caracol extends Enemigo {
 	private int velocidad;
 	private Animation izq;
 	private Animation der;
-	private Element pies;
 	private boolean pisa;
 
 	public Caracol(float x, float y, Stage s, GameScreen nivel) {
 		super(x, y, s, nivel);
+		peligroso = false;
 		this.setEnabled(true);
 		velocidad = 5;
 		izq = loadFullAnimation("enemies/caracolIzquierda.png", 1, 1, 0.2f, true);
@@ -40,8 +40,15 @@ public class Caracol extends Enemigo {
 	public void act(float delta) {
 		super.act(delta);
 		pisa = false;
-		for (Solid solidoo : nivel.suelo) {
-			if (pies.overlaps(solidoo)) {
+
+		for (Solid pared : nivel.paredes) {
+			if (pies.overlaps(pared)) {
+				direccion *= -1;
+				break;
+			}
+		}
+		for (Solid solido : nivel.suelo) {
+			if (pies.overlaps(solido)) {
 				pisa = true;
 			}
 

@@ -82,7 +82,7 @@ public class Player extends Element {
 	private void controles() {
 		boolean quieto = true;
 			//AudioManager.currentMusic.setVolume(Parametros.musicVolume)
-		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+		if (Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A)) {
 
 			this.setAnimation(izqda);
 			this.acceleration.add(-walkingSpeed, 0);
@@ -90,7 +90,7 @@ public class Player extends Element {
 			quieto = false;
 		}
 
-		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+		if (Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D)) {
 			this.setAnimation(drcha);
 			this.acceleration.add(walkingSpeed, 0);
 

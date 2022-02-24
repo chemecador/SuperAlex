@@ -16,7 +16,7 @@
 local.properties
 # Compiled class file
 *.class
-
+bin/*.class
 # Log file
 *.log
 

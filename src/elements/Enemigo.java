@@ -7,14 +7,27 @@ import screens.GameScreen;
 
 public class Enemigo extends Element {
 
-	public int vida;
 	public int velocidad;
+	public int direccion;
+	public boolean peligroso;
+	private boolean vivo;
 	public GameScreen nivel;
+	public Element pies;
+	public Element cabeza;
+	boolean pisa;
 	
 	public Enemigo(float x, float y, Stage s, GameScreen nivel) {
 		super(x, y, s);
+		this.vivo = true;
 		this.nivel = nivel;
 		this.setEnabled(true);
+	}
+	public void morir() {
+		this.setEnabled(false);
+		this.vivo = false;
+	}
+	public boolean isAlive() {
+		return this.vivo;
 	}
 	
 	@Override
