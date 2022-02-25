@@ -18,7 +18,7 @@ public class AudioManager {
 
 			currentMusicName = path;
 			currentMusic = ResourceManager.getMusic(path);
-			currentMusic.setVolume(Parametros.musicVolume);
+			currentMusic.setVolume(Parametros.volumen);
 			currentMusic.setLooping(true);
 			currentMusic.play();
 		}
@@ -27,6 +27,6 @@ public class AudioManager {
 	public static void playSound(String path) {
 
 		sound = ResourceManager.getSound(path);
-		sound.play(Parametros.soundVolume);
+		sound.play(Parametros.volumen);
 	}
 }

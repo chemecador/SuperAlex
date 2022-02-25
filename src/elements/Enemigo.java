@@ -12,12 +12,13 @@ public class Enemigo extends Element {
 	public boolean peligroso;
 	private boolean vivo;
 	public GameScreen nivel;
-	public Element pies;
 	public Element cabeza;
-	boolean pisa;
+	public Element pies;
+	public boolean tieneCabeza; //public ??
 	
 	public Enemigo(float x, float y, Stage s, GameScreen nivel) {
 		super(x, y, s);
+		this.tieneCabeza = false;
 		this.vivo = true;
 		this.nivel = nivel;
 		this.setEnabled(true);
@@ -25,9 +26,14 @@ public class Enemigo extends Element {
 	public void morir() {
 		this.setEnabled(false);
 		this.vivo = false;
+		this.pies.setEnabled(false);
+		this.cabeza.setEnabled(false);
 	}
 	public boolean isAlive() {
 		return this.vivo;
+	}
+	public boolean tieneCabeza() {
+		return tieneCabeza;
 	}
 	
 	@Override

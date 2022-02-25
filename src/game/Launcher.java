@@ -13,7 +13,9 @@ public class Launcher {
 	
 	/***
 	 * 
-	 * GameScreen 179
+	 * Enemigo.tieneCabeza acceso privado, no es visible para sus hijos ???
+	 * Gestionar tiempo
+	 * Centrar camara
 	 * 
 	 * 
 	 */

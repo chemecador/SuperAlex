@@ -26,6 +26,7 @@ public class Player extends Element {
 
 	public Element pies;
 	public boolean tocoSuelo;
+	public boolean tocoPared;
 
 	private float walkingSpeed = 600;
 	private float fuerzaSaltoChiquito = 30000;
@@ -81,7 +82,7 @@ public class Player extends Element {
 
 	private void controles() {
 		boolean quieto = true;
-			//AudioManager.currentMusic.setVolume(Parametros.musicVolume)
+
 		if (Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A)) {
 
 			this.setAnimation(izqda);

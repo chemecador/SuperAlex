@@ -1,38 +1,31 @@
 package elements;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import screens.GameScreen;
 
 public class Spider extends Enemigo {
-
-	private int direccion;
-	private int velocidad;
 	private Animation spider;
-	private Element pies;
 	private boolean pisa;
 
 	public Spider(float x, float y, Stage s, GameScreen nivel) {
 		super(x, y, s, nivel);
-		setEnabled(true);
+		tieneCabeza = true;
 		peligroso = true;
 		velocidad = 100;
 		spider = loadFullAnimation("enemies/spider.png", 2, 1, 0.4f, true);
 		direccion = -1;
 		pies = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 4);
 		pies.setRectangle();
-		cabeza = new Element(0, 0, s, this.getWidth()/4, this.getHeight()/8);
+		cabeza = new Element(0, 0, s, this.getWidth(), this.getHeight()/8);
 		cabeza.setRectangle();
 		ponerCabeza();
 		ponerPies();
 	}
 	private void ponerCabeza() {
-		if (direccion == -1) {
-			cabeza.setPosition(this.getX() + this.getWidth()*2/10, this.getY() + this.getHeight() * 7 / 8);
-		} else {
-			cabeza.setPosition(this.getX() + this.getWidth()*2/10, this.getY() + this.getHeight() * 7 / 8);
-		}
+		cabeza.setPosition(this.getX(), this.getY() + this.getHeight() * 7 / 8);
 	}
 
 	private void ponerPies() {
@@ -42,6 +35,25 @@ public class Spider extends Enemigo {
 			pies.setPosition(this.getX() + this.getWidth() * 3 / 4, this.getY() - this.getHeight() / 8);
 		}
 	}
+	
+	@Override
+	public void setRectangle() {
+		float w, h;
+		if (this.polyWidth != getWidth() && this.polyWidth > 0) {
+			w = this.polyWidth;
+		} else {
+			w = this.getWidth();
+		}
+		if (this.polyHigh != this.getHeight() && this.polyHigh > 0) {
+			h = this.polyHigh;
+		} else {
+			h = getHeight();
+		}
+		float[] vertices = { padX, padY, w - padX, padY, w - padX, h - padY, padX, h - padY };
+		colision = new Polygon(vertices);
+		this.setOrigin(w / 2, h / 2);
+	}
+
 	@Override
 	public void act(float delta) {
 		super.act(delta);

@@ -24,8 +24,10 @@ public final class ResourceManager {
 
 	public static AssetManager assets = new AssetManager();
 	public static LabelStyle buttonStyle;
+	public static LabelStyle consejoStyle;
 	public static TextButtonStyle textButtonStyle;
 	public static BitmapFont fuentePropia;
+	public static BitmapFont fuenteConsejo;
 
 	public static void loadAllResources() {
 
@@ -68,6 +70,8 @@ public final class ResourceManager {
 		assets.load("ui/rojo.jpg", Texture.class);
 		assets.load("ui/morado.jpg", Texture.class);
 		assets.load("ui/gris.png", Texture.class);
+		assets.load("ui/mas.png", Texture.class);
+		assets.load("ui/menos.png", Texture.class);
 		assets.load("ui/fondoinicio.png", Texture.class);
 		assets.load("ui/fondofinal.png", Texture.class);
 
@@ -77,23 +81,12 @@ public final class ResourceManager {
 
 	public static TextButtonStyle getBoton(String path) {
 		// estilo para botones
-				FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.internal("sans.ttf"));
-				FreeTypeFontParameter ftfp = new FreeTypeFontParameter();
 
-				ftfp.size = 36;
-				ftfp.color = Color.WHITE;
-				ftfp.borderColor = Color.BLACK;
-				ftfp.borderWidth = 2;
-
-				fuentePropia = ftfg.generateFont(ftfp);
-				buttonStyle = new LabelStyle();
-				buttonStyle.font = fuentePropia;
-				textButtonStyle = new TextButtonStyle();
-				Texture buttonText = ResourceManager.getTexture(path);
-				NinePatch buttonPatch = new NinePatch(buttonText);
-				textButtonStyle.up = new NinePatchDrawable(buttonPatch);
-				textButtonStyle.font = fuentePropia;
-				return textButtonStyle;
+		Texture buttonText = ResourceManager.getTexture(path);
+		NinePatch buttonPatch = new NinePatch(buttonText);
+		textButtonStyle.up = new NinePatchDrawable(buttonPatch);
+		textButtonStyle.font = fuentePropia;
+		return textButtonStyle;
 	}
 
 	public static void botones() {
@@ -110,6 +103,17 @@ public final class ResourceManager {
 		fuentePropia = ftfg.generateFont(ftfp);
 		buttonStyle = new LabelStyle();
 		buttonStyle.font = fuentePropia;
+		
+
+		consejoStyle = new LabelStyle();
+		ftfp.size = 20;
+		ftfp.color = Color.WHITE;
+		ftfp.borderColor = Color.BLACK;
+		ftfp.borderWidth = 1;
+		fuenteConsejo = ftfg.generateFont(ftfp);
+		consejoStyle.font = fuenteConsejo;
+		
+		
 		textButtonStyle = new TextButtonStyle();
 		Texture buttonText = ResourceManager.getTexture("ui/rojo.jpg");
 		NinePatch buttonPatch = new NinePatch(buttonText);

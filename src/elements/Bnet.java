@@ -12,6 +12,8 @@ public class Bnet extends Enemigo {
 	public Bnet(float x, float y, Stage s, GameScreen nivel) {
 		super(x, y, s, nivel);
 		setEnabled(true);
+		direccion = 0;
+		velocidad = 0;
 		peligroso = false;
 		anim = loadFullAnimation("enemies/bnet.png", 2, 1, 0.2f, true);
 		//this.setPolygon(0);

@@ -6,21 +6,16 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import screens.GameScreen;
 
 public class Bandido extends Enemigo {
-
-	private int direccion;
-	private int velocidad;
 	private Animation quieto;
 	private Animation izquierda;
 	private Animation derecha;
-	public Element pies;
-	public Element cabeza;
 	private boolean pisa;
 
 	public Bandido(float x, float y, Stage s, GameScreen nivel) {
 		super(x, y, s, nivel);
 		// TODO Auto-generated constructor stub
 		peligroso = true;
-		setEnabled(true);
+		tieneCabeza = true;
 		velocidad = 200;
 		izquierda = loadFullAnimation("enemies/bandidoIzquierda.png", 1, 1, 0.2f, true);
 		derecha = loadFullAnimation("enemies/bandidoDerecha.png", 1, 1, 0.2f, true);
@@ -28,7 +23,7 @@ public class Bandido extends Enemigo {
 		direccion = -1;
 		pies = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 4);
 		pies.setRectangle();
-		cabeza = new Element(0, 0, s, this.getWidth()/3, this.getHeight()/8);
+		cabeza = new Element(0, 0, s, this.getWidth() / 3, this.getHeight() / 8);
 		cabeza.setRectangle();
 		ponerCabeza();
 		ponerPies();
@@ -36,8 +31,7 @@ public class Bandido extends Enemigo {
 	}
 
 	private void ponerCabeza() {
-		
-		cabeza.setPosition(this.getX() + this.getWidth()*4/12, this.getY() + this.getHeight() * 7 / 8);
+		cabeza.setPosition(this.getX() + this.getWidth() * 4 / 12, this.getY() + this.getHeight() * 7 / 8);
 	}
 
 	private void ponerPies() {
@@ -49,6 +43,13 @@ public class Bandido extends Enemigo {
 			this.setAnimation(derecha);
 		}
 
+	}
+
+	@Override
+	public void morir() {
+		super.morir();
+		pies.setEnabled(false);
+		cabeza.setEnabled(false);
 	}
 
 	@Override
@@ -68,7 +69,7 @@ public class Bandido extends Enemigo {
 				pisa = true;
 			}
 		}
-		
+
 		if (!pisa) {
 			direccion *= -1;
 		}

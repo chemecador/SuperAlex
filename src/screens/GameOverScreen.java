@@ -17,11 +17,11 @@ import game.Demo;
 import game.Parametros;
 import managers.ResourceManager;
 
-public class FinalScreen extends BScreen {
+public class GameOverScreen extends BScreen {
 	private Table tabla;
 	private Texture background;
 
-	public FinalScreen(Demo game) {
+	public GameOverScreen(Demo game) {
 		super(game);
 		Parametros.nivel = 0;
 		this.background = new Texture("ui/fondofinal.png");
@@ -58,7 +58,5 @@ public class FinalScreen extends BScreen {
         uiStage.getBatch().draw(background, 0, 0, Parametros.getAnchoPantalla(), Parametros.getAltoPantalla());
         uiStage.getBatch().end();
         uiStage.draw();
-
 	}
-
 }

@@ -38,7 +38,7 @@ public class GameScreen extends BScreen {
 	public Array<Solid> suelo;
 	public Array<Solid> paredes;
 	public Array<Enemigo> enemigos;
-	public static boolean isAlive;
+	public static boolean playerIsAlive; //true si el jugador está vivo, false si no
 	Solid end;
 
 	OrthographicCamera camara;
@@ -54,7 +54,7 @@ public class GameScreen extends BScreen {
 	public GameScreen(Demo game) {
 
 		super(game);
-		isAlive = true;
+		playerIsAlive = true;
 		Parametros.nivel += 1;
 		mainStage = new Stage();
 		uiStage = new Stage();
@@ -88,6 +88,7 @@ public class GameScreen extends BScreen {
 		cargarEtiquetas();
 		if (Parametros.musica) {
 			AudioManager.playMusic("audio/music/jk.mp3");
+			AudioManager.currentMusic.setVolume(Parametros.volumen);
 		}
 	}
 
@@ -96,10 +97,15 @@ public class GameScreen extends BScreen {
 		lbl.setPosition(Parametros.getAnchoPantalla() / 20, Parametros.getAltoPantalla() / 20);
 		uiStage.addActor(lbl);
 
-		consejo = new Label("Esto es un consejo", ResourceManager.buttonStyle);
+		consejo = new Label("", ResourceManager.consejoStyle);
 		consejo.setPosition(Parametros.getAnchoPantalla() / 3, Parametros.getAltoPantalla() / 20);
 		consejo.setVisible(false);
 		uiStage.addActor(consejo);
+		
+		if (Parametros.consejos && Parametros.activarConsejo) {
+			consejo.setText("Debo tener cuidado con ese enemigo, es peligroso");
+			consejo.setVisible(true);
+		}
 	}
 
 	private void cargarElementos() {
@@ -116,8 +122,7 @@ public class GameScreen extends BScreen {
 		props = elementos.get(0).getProperties();
 		end = new Solid((float) props.get("x"), (float) props.get("y"), mainStage, (float) props.get("width"),
 				(float) props.get("height"));
-		
-		
+
 		elementos = getRectangleList("Solid");
 		Solid solido;
 		suelo = new Array<Solid>();
@@ -127,7 +132,7 @@ public class GameScreen extends BScreen {
 					(float) props.get("height"));
 			suelo.add(solido);
 		}
-		
+
 		elementos = getRectangleList("Pared");
 		paredes = new Array<Solid>();
 		for (MapObject solid : elementos) {
@@ -136,8 +141,7 @@ public class GameScreen extends BScreen {
 					(float) props.get("height"));
 			paredes.add(solido);
 		}
-		
-		
+
 		enemigos = new Array<Enemigo>();
 		for (MapObject obj : getEnemyList()) {
 			props = obj.getProperties();
@@ -181,10 +185,10 @@ public class GameScreen extends BScreen {
 
 		centrarCamara();
 
-		if (!isAlive) {
+		if (!playerIsAlive) {
 			if (Parametros.vidas == 0) {
 				dispose();
-				game.setScreen(new FinalScreen(game));
+				game.setScreen(new GameOverScreen(game));
 			} else {
 				Parametros.nivel = 0;
 				game.setScreen(new GameScreen(game));
@@ -200,6 +204,14 @@ public class GameScreen extends BScreen {
 
 	public void colide() {
 		player.tocoSuelo = false;
+		player.tocoPared = false;
+		
+		for (Solid pared : paredes) {
+			if (pared.getEnabled() && pared.overlaps(player)) {
+				player.preventOverlap(pared);
+				// b.preventOverlap(player);
+			}
+		}
 		for (Solid b : suelo) {
 			if (b.getEnabled() && b.overlaps(player)) {
 				player.preventOverlap(b);
@@ -220,29 +232,42 @@ public class GameScreen extends BScreen {
 	}
 
 	private void pelear() {
+		// enemigos
 		for (Enemigo e : enemigos) {
-			if (e.overlaps(player) && e.peligroso) {
+			// choque con peligroso
+			if (e.tieneCabeza() && player.pies.overlaps(e.cabeza) && e.isAlive()) {
+				e.morir();
+				if (!e.peligroso) {
+					consejo.setText("Pobrecillo, no tendría que haber hecho eso. Era inofensivo...");
+					Parametros.activarConsejo = true;
+					consejo.setVisible(true);
+				}
+				if (e.peligroso) {
+					consejo.setText("He hecho bien. ¡Estaba a punto de atacarme!");
+					Parametros.activarConsejo = true;
+					consejo.setVisible(true);
+				}
+			} 
+			if (e.overlaps(player) && e.isAlive()) {
+				player.preventOverlap(e);
+			}
+			if (e.pies != null && e.pies.overlaps(player) && e.peligroso && e.isAlive()) {
 				player.preventOverlap(e);
 				Parametros.vidas--;
 				if (Parametros.vidas == 0) {
 					this.dispose();
-					game.setScreen(new FinalScreen(game));
+					game.setScreen(new GameOverScreen(game));
 				} else {
-					consejo.setText("Debo tener cuidado con ese enemigo, es peligroso");
-					consejo.setVisible(true);
+					Parametros.causaMuerte = 1;
+					Parametros.activarConsejo = true;
 					Parametros.nivel = 0;
 					game.setScreen(new GameScreen(game));
 				}
-			}
-			if (e.overlaps(player) && !e.peligroso) {
+
+			} 
+			/*if (e.overlaps(player) && !e.peligroso && e.isAlive()) {
 				player.preventOverlap(e);
-				e.preventOverlap(player);
-			}
-			if (e instanceof Bandido && e.isAlive()) {
-				if (player.pies.overlaps(((Bandido) e).cabeza)) {
-					e.morir();
-				}
-			}
+			}*/
 		}
 
 	}
