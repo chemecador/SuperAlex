@@ -10,13 +10,4 @@ public class Launcher {
 				Parametros.getAltoPantalla());
 
 	}
-	
-	/***
-	 * 
-	 * Enemigo.tieneCabeza acceso privado, no es visible para sus hijos ???
-	 * Gestionar tiempo
-	 * Centrar camara
-	 * 
-	 * 
-	 */
 }

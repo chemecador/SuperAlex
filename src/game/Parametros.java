@@ -10,7 +10,7 @@ public class Parametros {
 	public static final int ALTURA_BOTON = 55;
 	public static final int ESPACIADO = 40;
 
-	public static boolean debug = true;
+	public static boolean debug = false;
 
 	// Audio;
 	public static boolean musica = false;
@@ -21,6 +21,8 @@ public class Parametros {
 
 	//Variables de juego
 	public static int nivel = 0;
+	public static boolean drogado = false;
+	public static boolean acelerado = false;
 	
 	//Variables del jugador
 	public static int gravedad = -1000;
@@ -31,8 +33,8 @@ public class Parametros {
 	/***	 
 	 * causaMuerte = 0 -> No ha muerto
 	 * causaMuerte = 1 -> Bandido	 
-	 * causaMuerte = 2 -> Princesa	 
-	 * causaMuerte = 3 -> Arañusco
+	 * causaMuerte = 2 -> Arañusco	 
+	 * causaMuerte = 3 -> Princesa
 	 */
 	public static int causaMuerte = 0;
 	

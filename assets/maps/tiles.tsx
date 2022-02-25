@@ -26,4 +26,14 @@
    <property name="Enemy" value="Bnet"/>
   </properties>
  </tile>
+ <tile id="202">
+  <properties>
+   <property name="PowerUp" value="Seta"/>
+  </properties>
+ </tile>
+ <tile id="203">
+  <properties>
+   <property name="PowerUp" value="BebidaEnergetica"/>
+  </properties>
+ </tile>
 </tileset>

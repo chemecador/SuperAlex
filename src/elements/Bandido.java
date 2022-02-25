@@ -13,7 +13,6 @@ public class Bandido extends Enemigo {
 
 	public Bandido(float x, float y, Stage s, GameScreen nivel) {
 		super(x, y, s, nivel);
-		// TODO Auto-generated constructor stub
 		peligroso = true;
 		tieneCabeza = true;
 		velocidad = 200;
@@ -54,7 +53,6 @@ public class Bandido extends Enemigo {
 
 	@Override
 	public void act(float delta) {
-		// TODO Auto-generated method stub
 		super.act(delta);
 		pisa = false;
 

@@ -62,7 +62,13 @@ public class Caracol extends Enemigo {
 		}
 
 	}
-
+	
+	@Override
+	public void morir() {
+		super.morir();
+		pies.setEnabled(false);
+		cabeza.setEnabled(false);
+	}
 	@Override
 	public void act(float delta) {
 		super.act(delta);

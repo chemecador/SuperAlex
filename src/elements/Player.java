@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Intersector.MinimumTranslationVector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
 
 import game.Parametros;
 import managers.AudioManager;
@@ -20,31 +19,31 @@ public class Player extends Element {
 	private Animation<TextureRegion> agachado;
 	private Animation<TextureRegion> drcha;
 	private Animation<TextureRegion> izqda;
-	private Animation<TextureRegion> quieto;
+	//private Animation<TextureRegion> quieto;
 
 //gestión de tiempos
 
 	public Element pies;
 	public boolean tocoSuelo;
-	public boolean tocoPared;
 
-	private float walkingSpeed = 600;
-	private float fuerzaSaltoChiquito = 30000;
+	private static float NORMAL_SPEED = 600;
+	private float walkingSpeed = NORMAL_SPEED;
+	private float fuerzaSaltoChiquito = 28000;
 	private float fuerzaSaltoMedio = 60000;
 	private float fuerzaSaltoGrande = 65000;
 	private float maxSpeedHorizontal = 300;
 
 	public Player(float x, float y, Stage s) {
 		super(x, y, s);
-		this.maxSpeed = 9000;
-		this.deceleration = 20000000;
+		maxSpeed = 9000;
+		deceleration = 20000000;
 		tocoSuelo = false;
-		frente = loadFullAnimation("player/frente.png", 2, 1, 0.2f, true);
+		frente = loadFullAnimation("player/depie.png", 1, 1, 0.4f, true);
 		agachado = loadFullAnimation("player/agachado.png", 1, 1, 0.2f, true);
 		drcha = this.loadFullAnimation("player/derecha.png", 2, 1, 0.3f, true);
 		izqda = this.loadFullAnimation("player/izquierda.png", 2, 1, 0.3f, true);
-		quieto = this.loadFullAnimation("player/depie.png", 1, 1, 0.2f, true);
-		this.setRectangle();
+		//quieto = this.loadFullAnimation("player/frente.png", 2, 1, 0.4f, true);
+		setRectangle();
 
 		pies = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 10);
 		pies.setRectangle();
@@ -74,6 +73,11 @@ public class Player extends Element {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
+		if (Parametros.acelerado) {
+			walkingSpeed = maxSpeed;
+		} else {
+			walkingSpeed = NORMAL_SPEED;
+		}
 		controles();
 		this.acceleration.add(0, Parametros.gravedad);
 		this.applyPhysics(delta);
@@ -83,23 +87,47 @@ public class Player extends Element {
 	private void controles() {
 		boolean quieto = true;
 
-		if (Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A)) {
+		if (!Parametros.drogado) {
+			if (Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A)) {
+				if (tocoSuelo)
+					this.setAnimation(izqda);
+				this.acceleration.add(-walkingSpeed, 0);
 
-			this.setAnimation(izqda);
-			this.acceleration.add(-walkingSpeed, 0);
+				quieto = false;
+			}
 
-			quieto = false;
+			if (Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D)) {
+				if (tocoSuelo)
+					this.setAnimation(drcha);
+				this.acceleration.add(walkingSpeed, 0);
+
+				quieto = false;
+			}
+		} else {
+			if (Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A)) {
+				if (tocoSuelo)
+					this.setAnimation(drcha);
+				this.acceleration.add(walkingSpeed, 0);
+
+				quieto = false;
+
+			}
+
+			if (Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D)) {
+				if (tocoSuelo)
+					this.setAnimation(izqda);
+				this.acceleration.add(-walkingSpeed, 0);
+
+				quieto = false;
+			}
 		}
-
-		if (Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D)) {
-			this.setAnimation(drcha);
-			this.acceleration.add(walkingSpeed, 0);
-
-			quieto = false;
+		if (quieto && tocoSuelo) {
+			this.setAnimation(this.agachado);
 		}
-		if (quieto) {
-			this.setAnimation(this.quieto);
-		}
+		if(!tocoSuelo && velocity.y > 0)
+			this.setAnimation(frente);
+		if (!tocoSuelo && velocity.y < 0)
+			this.setAnimation(agachado);
 		if (Gdx.input.isKeyPressed(Keys.C) && tocoSuelo) {
 			this.setAnimation(agachado);
 			this.velocity.x = 0;
@@ -150,28 +178,6 @@ public class Player extends Element {
 
 		// reset acceleration
 		acceleration.set(0, 0);
-
-		/*
-		 * // apply acceleration
-		 * 
-		 * velocity.add(acceleration.x * dt, acceleration.y * dt);
-		 * 
-		 * float speed = velocity.len();
-		 * 
-		 * // decrease speed (decelerate) when not accelerating
-		 * 
-		 * if (acceleration.len() == 0) speed -= deceleration * dt;
-		 * 
-		 * // keep speed within set bounds speed = MathUtils.clamp(speed, 0, maxSpeed);
-		 * 
-		 * // update velocity velocity.setLength(speed);
-		 * 
-		 * if (Math.abs(acceleration.x) > walkingSpeed) { // acceleration o velocity??
-		 * if (velocity.x > 0) { velocity.x = walkingSpeed; } else { this.velocity.x =
-		 * -walkingSpeed; } } // update position according to value stored in velocity
-		 * vector moveBy(velocity.x * dt, velocity.y * dt); // reset acceleration
-		 * acceleration.set(0, 0);
-		 */
 	}
 
 	private void limitHorizontalSpeed() {

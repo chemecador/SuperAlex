@@ -6,16 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
 import game.Parametros;
+import managers.AudioManager;
 import screens.GameScreen;
 
 public class Princesa extends Enemigo {
-
-	private float tiempoComportamiento;
-	private float cuentaComportamiento;
-
-	private float distanciaVision;
+	
 	private float aceleracion;
-
 	private float tiempoDisparo;
 	private float cuentaDisparo;
 	private Array<Corazon> corazones;
@@ -34,15 +30,12 @@ public class Princesa extends Enemigo {
 		tieneCabeza = true;
 		peligroso = true;
 		persiguiendo = false;
-		cuentaComportamiento = 0;
-		tiempoComportamiento = 0.5f;
-		distanciaVision = 72;
-		numCorazones = 5;
+		numCorazones = 10;
 		corazonActual = 0;
 		corazones = new Array<Corazon>();
 		tiempoDisparo = 3;
 		cuentaDisparo = 0;
-		velocidad = 50;
+		velocidad = 30;
 		izquierda = loadFullAnimation("enemies/princesaIzquierda.png", 2, 1, 0.2f, true);
 		derecha = loadFullAnimation("enemies/princesaDerecha.png", 2, 1, 0.2f, true);
 		quieta = loadFullAnimation("enemies/princesaQuieta.png", 1, 1, 0.2f, true);
@@ -76,7 +69,12 @@ public class Princesa extends Enemigo {
 		}
 
 	}
-
+	@Override
+	public void morir() {
+		super.morir();
+		pies.setEnabled(false);
+		cabeza.setEnabled(false);
+	}
 	@Override
 	public void act(float delta) {
 		super.act(delta);
@@ -102,21 +100,11 @@ public class Princesa extends Enemigo {
 		moveBy(direccion * velocidad * delta, 0);
 
 		if (this.getEnabled()) {
-			if (persiguiendo) {
-				perseguir();
-				if (cuentaDisparo <= 0) {
-					System.out.println("Te disparo");
-					disparar();
-				} else {
-					cuentaDisparo -= delta;
-				}
+			perseguir();
+			if (cuentaDisparo <= 0) {
+				disparar();
 			} else {
-				if (Math.sqrt(Math.pow(this.getX() - Parametros.jugadorx, 2)
-						+ Math.pow(this.getY() - Parametros.jugadory, 2)) < distanciaVision) {
-					System.out.println("Te persigo");
-					persiguiendo = true;
-
-				} 
+				cuentaDisparo -= delta;
 			}
 			this.applyPhysics(delta);
 		}
@@ -124,6 +112,10 @@ public class Princesa extends Enemigo {
 			if (c.getEnabled() && c.overlaps(nivel.player)) {
 				Parametros.vidas--;
 				GameScreen.playerIsAlive = false;
+				AudioManager.playSound("audio/sounds/au.mp3");
+				Parametros.causaMuerte = 3;
+				Parametros.activarConsejo = true;
+				GameScreen.consejo.setVisible(true);
 				c.setEnabled(false);
 
 			}

@@ -7,7 +7,6 @@ public class Solid extends Element{
 
 	public Solid(float x, float y, Stage s, float w, float h) {
 		super(x, y, s, w, h);
-		// TODO Auto-generated constructor stub
 		
 		float[] vertices= {0,0,w,0,w,h,0,h};
 		colision=new Polygon(vertices);

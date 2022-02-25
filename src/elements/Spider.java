@@ -19,13 +19,13 @@ public class Spider extends Enemigo {
 		direccion = -1;
 		pies = new Element(0, 0, s, this.getWidth() / 4, this.getHeight() / 4);
 		pies.setRectangle();
-		cabeza = new Element(0, 0, s, this.getWidth(), this.getHeight()/8);
+		cabeza = new Element(0, 0, s, this.getWidth()*3/4, this.getHeight()/8);
 		cabeza.setRectangle();
 		ponerCabeza();
 		ponerPies();
 	}
 	private void ponerCabeza() {
-		cabeza.setPosition(this.getX(), this.getY() + this.getHeight() * 7 / 8);
+		cabeza.setPosition(this.getX()+5, this.getY() + this.getHeight() * 7 / 8);
 	}
 
 	private void ponerPies() {
@@ -35,7 +35,12 @@ public class Spider extends Enemigo {
 			pies.setPosition(this.getX() + this.getWidth() * 3 / 4, this.getY() - this.getHeight() / 8);
 		}
 	}
-	
+	@Override
+	public void morir() {
+		super.morir();
+		pies.setEnabled(false);
+		cabeza.setEnabled(false);
+	}
 	@Override
 	public void setRectangle() {
 		float w, h;
@@ -49,7 +54,8 @@ public class Spider extends Enemigo {
 		} else {
 			h = getHeight();
 		}
-		float[] vertices = { padX, padY, w - padX, padY, w - padX, h - padY, padX, h - padY };
+		w = w*2/3;
+		float[] vertices = { padX + 10, padY, w - padX + 10, padY, w - padX + 10, h - padY, padX + 10, h - padY };
 		colision = new Polygon(vertices);
 		this.setOrigin(w / 2, h / 2);
 	}

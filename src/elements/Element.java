@@ -1,9 +1,7 @@
 package elements;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,13 +13,11 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Intersector.MinimumTranslationVector;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
 import game.Parametros;
 import managers.ResourceManager;
-import screens.GameScreen;
 
 public class Element extends Actor {
 	protected Animation<TextureRegion> animation;
@@ -47,18 +43,14 @@ public class Element extends Actor {
 	}
 
 	public Element(float x, float y, Stage s) {
-
 		this.setPosition(x, y);
 		s.addActor(this);
 		velocity = new Vector2(0, 0);
 		acceleration = new Vector2(0, 0);
-
 		maxSpeed = 1000;
 		deceleration = 0;
 		enabled = true;
-
 		shapeRenderer = new ShapeRenderer();
-
 	}
 
 	public Element(float x, float y, Stage s, float w, float h) {
@@ -77,23 +69,8 @@ public class Element extends Actor {
 
 	}
 
-	/*
-	 * @Override public void draw(Batch batch, float parentAlpha) { // TODO
-	 * Auto-generated method stub
-	 * if(this.getEnabled()&&((GameScreen.playerY>this.getY() && GameScreen.encima
-	 * )|| (GameScreen.playerY<=this.getY() && GameScreen.encima==false))) {
-	 * 
-	 * if(animation!=null ) {batch.draw( animation.getKeyFrame(animationTime),
-	 * getX(), getY(), getOriginX(), getOriginY(),
-	 * animation.getKeyFrame(animationTime).getRegionWidth(),
-	 * animation.getKeyFrame(animationTime).getRegionHeight(), getScaleX(),
-	 * getScaleY(), getRotation() ); } if(GameScreen.debug) { pintarCaja(batch); }
-	 * super.draw(batch, parentAlpha); }
-	 */
-
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		// TODO Auto-generated method stub
 		if (this.getEnabled()) {
 
 			if (animation != null) {
@@ -141,7 +118,6 @@ public class Element extends Actor {
 
 	@Override
 	public void act(float delta) {
-		// TODO Auto-generated method stub
 		if (this.getEnabled()) {
 			super.act(delta);
 			animationTime += delta;
@@ -193,7 +169,6 @@ public class Element extends Actor {
 			boolean loop) {
 
 		Texture texture = ResourceManager.getTexture(name);
-		// texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		int frameWidth = texture.getWidth() / cols;
 		int frameHeight = texture.getHeight() / rows;
 
@@ -233,11 +208,7 @@ public class Element extends Actor {
 		// keep speed within set bounds
 		speed = MathUtils.clamp(speed, 0, maxSpeed);
 
-		// update velocity
-		/*if (velocity.len() == 0)
-			velocity.set(speed, 0);
-		else*/
-			velocity.setLength(speed);
+		velocity.setLength(speed);
 
 		// update position according to value stored in velocity vector
 		moveBy(velocity.x * dt, velocity.y * dt);
@@ -284,11 +255,6 @@ public class Element extends Actor {
 		return mtv.normal;
 	}
 
-	/*
-	 * public void setRectangle() { float w = getWidth(); float h = getHeight();
-	 * float[] vertices = {0,0, w,0, w,h, 0,h}; colision = new Polygon(vertices); }
-	 */
-
 	public void setRectangle() {
 		float w, h;
 		if (this.polyWidth != getWidth() && this.polyWidth > 0) {
@@ -315,9 +281,7 @@ public class Element extends Actor {
 	}
 
 	public void setPolygon(int numSides) {
-		/*
-		 * float w = getWidth(); float h = getHeight();
-		 */
+
 		this.setOrigin(polyWidth / 2, polyHigh / 2);
 
 		float[] vertices = new float[2 * numSides];
@@ -327,19 +291,12 @@ public class Element extends Actor {
 			vertices[2 * i] = this.polyWidth / 2 * MathUtils.cos(angle) + this.polyWidth / 2;
 			// y-coordinate
 			vertices[2 * i + 1] = this.polyHigh / 2 * MathUtils.sin(angle) + this.polyHigh / 2;
-			/*
-			 * // x-coordinate vertices[2*i] = this.getOriginX() * MathUtils.cos(angle) +
-			 * this.getOriginX()/2; // y-coordinate vertices[2*i+1] = this.getOriginY()/2 *
-			 * MathUtils.sin(angle) + this.getOriginY()/2;
-			 */}
+		}
 		colision = new Polygon(vertices);
 
 	}
 
 	public void setPolygonShort(int numSides, int factor) {
-		/*
-		 * float w = getWidth(); float h = getHeight();
-		 */
 		this.setOrigin(polyWidth / 2, polyHigh / 2);
 		this.polyHigh = this.polyHigh / factor;
 
@@ -350,11 +307,7 @@ public class Element extends Actor {
 			vertices[2 * i] = this.polyWidth / 2 * MathUtils.cos(angle) + this.polyWidth / 2;
 			// y-coordinate
 			vertices[2 * i + 1] = this.polyHigh / 2 * MathUtils.sin(angle) + this.polyHigh / 2;
-			/*
-			 * // x-coordinate vertices[2*i] = this.getOriginX() * MathUtils.cos(angle) +
-			 * this.getOriginX()/2; // y-coordinate vertices[2*i+1] = this.getOriginY()/2 *
-			 * MathUtils.sin(angle) + this.getOriginY()/2;
-			 */}
+		}
 		colision = new Polygon(vertices);
 
 	}

@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -61,10 +59,14 @@ public final class ResourceManager {
 		assets.load("ui/boton.png", Texture.class);
 		assets.load("ui/uncheck.png", Texture.class);
 		assets.load("ui/check.png", Texture.class);
+		assets.load("ui/monster.png", Texture.class);
+		assets.load("ui/seta.png", Texture.class);
 
 		// Audio
-		assets.load("audio/music/jk.mp3", Music.class);
+		assets.load("audio/music/jk.mp3", Music.class); 
+		assets.load("audio/music/bnet.mp3", Music.class); 
 		assets.load("audio/sounds/salto.mp3", Sound.class);
+		assets.load("audio/sounds/au.mp3", Sound.class);
 
 		// UI
 		assets.load("ui/rojo.jpg", Texture.class);
@@ -74,6 +76,7 @@ public final class ResourceManager {
 		assets.load("ui/menos.png", Texture.class);
 		assets.load("ui/fondoinicio.png", Texture.class);
 		assets.load("ui/fondofinal.png", Texture.class);
+		assets.load("ui/gameOver.png", Texture.class);
 
 		// añadir más elementos
 

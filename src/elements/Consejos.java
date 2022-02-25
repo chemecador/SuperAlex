@@ -10,6 +10,7 @@ public enum Consejos {
 	SPIDER("Los arañuscos no me gustan un pelo..."),
 	BANDIDO("Yo creo que el bandido me quiere apuñalar. Tendré cuidado con él..."),
 	PRINCESA("Me da la sensación de que esa princesa es peligrosa. No debería acercarme a ella..."),
+	BNET("Bnet solo ha venido a improvisar. Si me acerco a él, podré escucharlo"),
 	ENEMIGO("Si salto encima de los enemigos, creo que los podré derrotar...");
 
 	private String valor;

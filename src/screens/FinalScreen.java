@@ -7,19 +7,18 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-
 import game.Demo;
 import game.Parametros;
 import managers.ResourceManager;
 
-public class GameOverScreen extends BScreen {
+public class FinalScreen extends BScreen {
 	private Table tabla;
 	private Texture background;
 
-	public GameOverScreen(Demo game) {
+	public FinalScreen(Demo game) {
 		super(game);
 		Parametros.nivel = 0;
-		this.background = new Texture("ui/gameOver.png");
+		this.background = new Texture("ui/fondofinal.png");
 		tabla = new Table();
 		tabla.setFillParent(true);
 

@@ -2,11 +2,10 @@ package elements;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import game.Parametros;
 
 public class Corazon extends Element {
-	private float duracionBala = 1.5f;
-	private float tiempoBala = 2 * duracionBala;
+	private float duracionBala = 4f;
+	private float tiempoBala = 3 * duracionBala;
 	private float velocidad;
 
 	public Corazon(float x, float y, Stage s, float velocidad) {

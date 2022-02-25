@@ -14,7 +14,7 @@ public class Enemigo extends Element {
 	public GameScreen nivel;
 	public Element cabeza;
 	public Element pies;
-	public boolean tieneCabeza; //public ??
+	public boolean tieneCabeza;
 	
 	public Enemigo(float x, float y, Stage s, GameScreen nivel) {
 		super(x, y, s);
@@ -26,8 +26,6 @@ public class Enemigo extends Element {
 	public void morir() {
 		this.setEnabled(false);
 		this.vivo = false;
-		this.pies.setEnabled(false);
-		this.cabeza.setEnabled(false);
 	}
 	public boolean isAlive() {
 		return this.vivo;

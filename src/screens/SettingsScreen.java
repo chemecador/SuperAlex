@@ -1,8 +1,5 @@
 package screens;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
@@ -18,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 import game.Demo;
 import game.Parametros;
-import managers.AudioManager;
 import managers.ResourceManager;
 
 public class SettingsScreen extends BScreen {
@@ -105,7 +101,6 @@ public class SettingsScreen extends BScreen {
 				Parametros.volumen -= 0.1f;
 			vol = String.valueOf(Parametros.volumen).substring(0, 3);
 			Parametros.volumen = Float.parseFloat(vol);
-			
 
 			if (Parametros.volumen < 0.1f)
 				Parametros.volumen = 0.01f;
