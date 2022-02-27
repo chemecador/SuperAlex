@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 public enum Consejos {
+	OBJETIVO("Tengo que llegar a la cima..."),
 	CARACOl("Los caracoles son inofensivos, no debería hacerles daño..."), 
 	SPIDER("Los arañuscos no me gustan un pelo..."),
 	BANDIDO("Yo creo que el bandido me quiere apuñalar. Tendré cuidado con él..."),

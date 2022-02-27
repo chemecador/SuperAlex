@@ -56,7 +56,6 @@ public final class ResourceManager {
 		assets.load("player/derecha.png", Texture.class);
 
 		// objetos
-		assets.load("ui/boton.png", Texture.class);
 		assets.load("ui/uncheck.png", Texture.class);
 		assets.load("ui/check.png", Texture.class);
 		assets.load("ui/monster.png", Texture.class);
@@ -70,12 +69,10 @@ public final class ResourceManager {
 
 		// UI
 		assets.load("ui/rojo.jpg", Texture.class);
-		assets.load("ui/morado.jpg", Texture.class);
-		assets.load("ui/gris.png", Texture.class);
 		assets.load("ui/mas.png", Texture.class);
 		assets.load("ui/menos.png", Texture.class);
-		assets.load("ui/fondoinicio.png", Texture.class);
-		assets.load("ui/fondofinal.png", Texture.class);
+		assets.load("ui/fondoInicio.png", Texture.class);
+		assets.load("ui/fondoFinal.png", Texture.class);
 		assets.load("ui/gameOver.png", Texture.class);
 
 		// añadir más elementos

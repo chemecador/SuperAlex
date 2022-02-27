@@ -39,7 +39,7 @@ public class SettingsScreen extends BScreen {
 
 	public SettingsScreen(Demo game) {
 		super(game);
-		this.background = new Texture("ui/fondoinicio.png");
+		this.background = new Texture("ui/fondoInicio.png");
 		settingsStyle = new LabelStyle(ResourceManager.fuentePropia, Color.WHITE);
 		uiStage = new Stage();
 		opcionesLbl = new Label("Opciones", settingsStyle);

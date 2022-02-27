@@ -23,7 +23,7 @@ public class TitleScreen extends BScreen {
 		super(game);
 		uiStage = new Stage();
 		Parametros.vidas = 3;
-		this.background = new Texture("ui/fondoinicio.png");
+		this.background = new Texture("ui/fondoInicio.png");
 		tabla = new Table();
 		tabla.setFillParent(true);
 		this.uiStage.addActor(tabla);
@@ -34,6 +34,7 @@ public class TitleScreen extends BScreen {
 
 	private void cargarBotones() {
 		cargarBotonJugar();
+		cargarBotonControles();
 		cargarBotonOpciones();
 		cargarBotonSalir();
 	}
@@ -49,6 +50,20 @@ public class TitleScreen extends BScreen {
 			return false;
 		});
 		tabla.add(boton).fill().height(Parametros.ALTURA_BOTON).spaceBottom(Parametros.ESPACIADO);
+		tabla.row();
+
+	}
+
+	private void cargarBotonControles() {
+		TextButton controles = new TextButton("Controles", ResourceManager.textButtonStyle);
+		controles.addListener((Event e) -> {
+			if (!(e instanceof InputEvent) || !((InputEvent) e).getType().equals(Type.touchDown))
+				return false;
+			this.dispose();
+			game.setScreen(new ControlesScreen(game));
+			return false;
+		});
+		tabla.add(controles).fill().height(Parametros.ALTURA_BOTON).spaceBottom(Parametros.ESPACIADO);
 		tabla.row();
 
 	}
